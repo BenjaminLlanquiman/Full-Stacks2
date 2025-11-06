@@ -1,9 +1,9 @@
 import { useState, type FormEvent } from "react";
 import { validateLogin } from "../validaciones/validacionesLogin.ts";
 import type { LoginErrors } from "../validaciones/validacionesLogin.ts";
-import Footer from "./Footer.tsx";
+import Footer from "../componentes/Footer.tsx";
 import "../style/loginForm.css";
-import Navbar from "./Navbar.tsx";
+import Navbar from "../componentes/Navbar.tsx";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");

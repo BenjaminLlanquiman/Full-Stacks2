@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { getProductos } from "../accionesProductos";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Navbar from "../../componentes/Navbar";
+import Footer from "../../componentes/Footer";
 
 interface peliculaProps {
         id: number;
@@ -22,6 +24,8 @@ export const Productos = () => {
     }
 
     return(
+        <>
+        <Navbar />
         <main className="main-container">
 
             <h1 className="text-center text-uppercase fs-1 my-5">productos</h1>
@@ -49,5 +53,7 @@ export const Productos = () => {
                 )}
             </div>
        </main>
+       <Footer />
+       </>
     );
 }
