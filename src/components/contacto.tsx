@@ -6,7 +6,7 @@ const Contacto: React.FC = () => {
     return (
         <>
         <Navbar />
-        <div className="d-flex justify-content-center align-items-center vh-100 bg-dark">
+        <div className="d-flex justify-content-center align-items-center vh-100 bg-white">
             <div className="p-4 rounded shadow bg-white" style={{ maxWidth: '500px', width: '100%' }}>
                 <h1 className="text-center mb-4 text-primary">MoviE-Store</h1>
                 <form>

@@ -32,7 +32,7 @@ export default function HomeTienda() {
             </p>
 
             <div className="btn-explorar-prod">
-              <a href="#">Explorar catálogo</a>
+              <Link to="/">Explorar catálogo</Link>
             </div>
           </div>
 
@@ -43,57 +43,74 @@ export default function HomeTienda() {
         </header>
 
         {/* PRODUCTOS RECOMENDADOS */}
+        {/* Los Siete Pecados Capitales */}
+
         <section className="productos-recomendados">
           <div className="producto-card">
-            <a className="ancla-img" href="./detalle_producto.html">
-              <img src="./assets/img/seven-poster.jpg" alt="Imagen poster Seven" />
-            </a>
+            <Link className="ancla-img" to="/detalle-pelicula/0">
+              <img src="./imgPosters/seven-poster.jpg" alt="Imagen poster Seven" />
+            </Link>
             <div className="prod-titulo">
-              <a className="ancla-titulo-prod" href="./detalle_producto.html">
+              <Link className="ancla-titulo-prod" to="./detalle-pelicula/0">
                 Los Siete Pecados Capitales
-              </a>
+              </Link>
             </div>
             <p>$1000</p>
           </div>
 
+
+          {/* Rápido y Furioso: Reto Tokio */}
+
           <div className="producto-card">
-            <a className="ancla-img" href="#">
-              <img src="./assets/img/fast-furious-poster.jpg" alt="Imagen Rapido y Furioso" />
-            </a>
+             <Link className="ancla-img" to="/detalle-pelicula/3">
+              <img src="./imgPosters/fast-furious-poster.jpg" alt="Imagen Rapido y Furioso" />
+            </Link>
             <div className="prod-titulo">
-              <a className="ancla-titulo-prod" href="#">
+              <Link className="ancla-titulo-prod" to="./detalle-pelicula/3">
                 Rápido y Furioso: Reto Tokio
-              </a>
+              </Link>
             </div>
             <p>$1000</p>
           </div>
 
+
+          {/* Matilda */}
+
           <div className="producto-card">
-            <a className="ancla-img" href="#">
-              <img src="./assets/img/matilda-poster.jpg" alt="Imagen poster Matilda" />
-            </a>
+            <Link className="ancla-img" to="/detalle-pelicula/1">
+              <img src="./imgPosters/matilda-poster.jpg" alt="Imagen poster Matilda" />
+            </Link>
             <div className="prod-titulo">
-              <a className="ancla-titulo-prod" href="#">Matilda</a>
+              <Link className="ancla-titulo-prod" to="./detalle-pelicula/1">
+                Matilda
+              </Link>
             </div>
             <p>$1000</p>
           </div>
 
+          {/* Mad Max: Furia en la carretera */}
+
           <div className="producto-card">
-            <a className="ancla-img" href="#">
-              <img src="./assets/img/mad-max-poster.jpg" alt="Imagen poster Mad Max" />
-            </a>
+            <Link className="ancla-img" to="/detalle-pelicula/4">
+              <img src="./imgPosters/mad-max-poster.jpg" alt="Imagen poster Mad Max" />
+            </Link>
             <div className="prod-titulo">
-              <a className="ancla-titulo-prod" href="#">Mad Max: Furia en la carretera</a>
+              <Link className="ancla-titulo-prod" to="/detalle-pelicula/4">
+              Mad Max: Furia en la carretera
+              </Link>
             </div>
             <p>$1000</p>
           </div>
 
+
+          {/* SuperBad */}
+
           <div className="producto-card">
-            <a className="ancla-img" href="#">
-              <img src="./assets/img/superbad-poster.jpg" alt="Imagen poster SuperBad" />
-            </a>
+            <Link className="ancla-img" to="/detalle-pelicula/2">
+              <img src="./imgPosters/superbad-poster.jpg" alt="Imagen poster SuperBad" />
+            </Link>
             <div className="prod-titulo">
-              <a className="ancla-titulo-prod" href="#">SuperBad</a>
+              <Link className="ancla-titulo-prod" to="/detalle-pelicula/2">SuperBad</Link>
             </div>
             <p>$1000</p>
           </div>

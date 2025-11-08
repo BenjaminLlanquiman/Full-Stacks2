@@ -4,11 +4,14 @@ import type { LoginErrors } from "../validaciones/validacionesLogin.ts";
 import Footer from "../componentes/Footer.tsx";
 import "../style/loginForm.css";
 import Navbar from "../componentes/Navbar.tsx";
+import { useNavigate } from "react-router-dom";
+
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<LoginErrors>({});
+  const navigate = useNavigate();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -16,6 +19,8 @@ export default function LoginForm() {
     const result = validateLogin({ email, password });
     setErrors(result);
     if (result.email || result.password) return;
+
+    navigate("/Home");
 
     console.log("Email:", email);
     console.log("Password:", password);
