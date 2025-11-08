@@ -1,4 +1,15 @@
-export const peliculas = [
+
+export interface PeliculaType {
+    id: number;
+    titulo: string;
+    descripcion: string;
+    precio: number;
+    imagenSrc: string;
+    imagenAlt: string;
+    categoria: string;
+}
+
+export const peliculas: PeliculaType[] = [
     {
         id: 0,
         titulo: "Se7en: Los siete pecados capitales",

@@ -1,38 +1,28 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { getProductos } from '../accionesProductos';
-//import { useNavigate, useParams } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
-/*
-interface DetalleProductoProp {
-    productos: {titulo: string, descripcion: string, precio: number, imagenSrc: string, imagenAlt: string, categoria: string}
+interface DetalleProductoProps {
+    agregarProd: (idProd: number) => void;
 }
-*/
 
-const buscarPeliculaPorId = (id:string|undefined) => {
-    const peliculas = getProductos()
+export const DetalleProducto = ({agregarProd}:DetalleProductoProps) => {
 
-    if(!id) {
-        return;
+    const buscarPeliculaPorId = (id:string) => {
+        const peliculas = getProductos()
+    
+        const numId = parseInt(id)
+    
+        const pelicula = peliculas.find(peli => peli.id === numId);
+    
+        return pelicula;
     }
 
-    const numId = parseInt(id)
+    const { id } = useParams<{id: string}>();
 
-    const pelicula = peliculas.find(peli => peli.id === numId);
+    const pelicula = id ? buscarPeliculaPorId(id) : undefined;
 
-    return pelicula;
-}
-
-//export const DetalleProducto = ({productos}:DetalleProductoProp) => {
-export const DetalleProducto = () => {
-
-    //const navigate = useNavigate();
-
-    const { id } = useParams();
-
-    const pelicula = buscarPeliculaPorId(id);
-
-    console.log(pelicula);
+    if(!pelicula) return <p>Pelicula no encontrada </p>
 
     return(
         <main className="container-sm bg-secondary-subtle">
@@ -54,7 +44,7 @@ export const DetalleProducto = () => {
                         </div>
 
                         <div className="text-center btn-agregar-container">
-                            <button className="btn btn-danger py-3 px-5">Añadir al carrito</button>
+                            <button className="btn btn-danger py-3 px-5" onClick={() => agregarProd(pelicula.id)}>Añadir al carrito</button>
                         </div>
                     </article>
                 </div>

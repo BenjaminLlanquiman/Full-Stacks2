@@ -1,0 +1,8 @@
+.img-pelicula {
+    display: block;
+    height: 50vh;
+}
+
+.producto-container:not(:last-child) {
+    margin-bottom: 20px;
+}
