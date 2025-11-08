@@ -1,10 +1,8 @@
 //import { RegistroUsuario } from "./registroComponent/components/RegistroUsuario";
 import { Productos } from "./productosComponent/components/Productos"
-import { useCallback, useEffect, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 import './index.css'
-import HomeTienda from './homeComponents/home_tienda.tsx'
 //import { DetalleProducto } from "./productosComponent/components/DetalleProducto"
 
 export const App = () => {
