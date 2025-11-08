@@ -5,9 +5,9 @@ import { CarritoCompras } from "../carritoCompraComponent/CarritoCompras"
 import type { PeliculaType } from "../productosComponent/datosProductos"
 import HomeTienda from "../homeComponents/home_tienda"
 import LoginForm from "../loginComponents/LoginForm"
-import Nosotros from "../components/nosotros"
-import Blogs from "../components/blogs"
-import Contacto from "../components/contacto"
+import Nosotros from "../nosotrosComponents/nosotros"
+import Blogs from "../blogsComponents/blogs"
+import Contacto from "../contactoComponents/contacto"
 import { RegistroUsuario } from "../registroComponent/components/RegistroUsuario"
 
 interface RoutesProps {
