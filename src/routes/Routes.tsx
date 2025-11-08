@@ -1,4 +1,4 @@
-import { Routes as ReactRoutes, Route } from "react-router-dom"
+import { useRoutes } from "react-router-dom"
 import { Productos } from "../productosComponent/components/Productos"
 import { DetalleProducto } from "../productosComponent/components/DetalleProducto"
 import { CarritoCompras } from "../carritoCompraComponent/CarritoCompras"
@@ -18,18 +18,18 @@ interface RoutesProps {
 }
 
 export const Routes = ({carrito, agregarProd, eliminarProd, limpiarCarrito}:RoutesProps) => {
-    return(
-        <ReactRoutes>
-            <Route path="/" element={<HomeTienda />}/>
-            <Route path="/productos" element={<Productos agregarProd = {agregarProd}/>} />
-            <Route path="/detalle-pelicula/:id" element={<DetalleProducto agregarProd = {agregarProd} />} />
-            <Route path="/carrito" element={<CarritoCompras carrito={carrito} eliminarProd = {eliminarProd} limpiarCarrito={limpiarCarrito} />} />
-            <Route path="/login" element={<LoginForm />}/>
-            <Route path="/nosotros" element={<Nosotros />}/>
-            <Route path="/blogs" element={<Blogs />}/>
-            <Route path="/contacto" element={<Contacto />}/>
-            <Route path="/registro-usuario" element={<RegistroUsuario tituloPagina="Registro de Usuario" />}/>
-            <Route path="*" element={<h1 className="fs-1 text-center my-5">Página no encontrada</h1>}/>
-        </ReactRoutes>
-    );
+        const routes = useRoutes([
+            { path:"/", element: <HomeTienda />},
+            { path:"/productos", element: <Productos agregarProd = {agregarProd}/>},
+            { path:"/detalle-pelicula/:id", element: <DetalleProducto agregarProd = {agregarProd} />},
+            { path:"/carrito", element: <CarritoCompras carrito={carrito} eliminarProd = {eliminarProd} limpiarCarrito={limpiarCarrito} />},
+            { path:"/login", element: <LoginForm />},
+            { path:"/nosotros", element: <Nosotros />},
+            { path:"/blogs", element: <Blogs />},
+            { path:"/contacto", element: <Contacto />},
+            { path:"/registro-usuario", element: <RegistroUsuario tituloPagina="Registro de Usuario" />},
+            { path:"*", element: <h1 className="fs-1 text-center my-5">Página no encontrada</h1>}
+        ]);
+
+        return routes;
 }

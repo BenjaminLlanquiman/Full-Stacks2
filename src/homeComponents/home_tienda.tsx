@@ -1,6 +1,6 @@
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "../style/home_tienda.css";
-import {Link} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { getProductos } from "../productosComponent/accionesProductos";
 import { TarjetaProductoHome } from "./TarjetaProductoHome";
 
@@ -9,6 +9,8 @@ export default function HomeTienda() {
 
   const peliculas = getProductos()
 
+  const navigate = useNavigate()
+
   return (
     <>
       {/* CONTENIDO PRINCIPAL */}
@@ -16,8 +18,8 @@ export default function HomeTienda() {
         {/* Opciones usuario */}
         <div className="usuario-container">
           <ul>
-            <li><Link to="/login">Iniciar sesión</Link></li>
-            <li><Link to="/registro-usuario">Registrar usuario</Link></li>
+            <li onClick={() => navigate("/login")}>Iniciar sesión</li>
+            <li onClick={() => navigate("/registro-usuario")}>Registrar usuario</li>
           </ul>
         </div>
 
@@ -33,7 +35,7 @@ export default function HomeTienda() {
             </p>
 
             <div className="btn-explorar-prod">
-              <Link to="/productos">Explorar catálogo</Link>
+              <p onClick={() => navigate("/productos")}>Explorar catálogo</p>
             </div>
           </div>
 

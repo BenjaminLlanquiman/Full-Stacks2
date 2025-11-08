@@ -21,10 +21,11 @@ export const TarjetaProducto = ({agregarProd, producto}:TarjetaProductoProps) =>
                     className="card-img-top cursor-pointer object-fit-cover"
                     alt={`${producto.imagenAlt}`}
                     onClick={() => navegarDetallePelicula(producto)}
+                    style={{cursor: 'pointer'}}
                 />
                 <div className="card-body">
                     <h5 className="card-title">
-                        <a onClick = {() => {navegarDetallePelicula(producto)}}>
+                        <a onClick = {() => {navegarDetallePelicula(producto)}} style={{cursor: 'pointer', color: '#042dd1'}}>
                             {producto.titulo}
                         </a>
                     </h5>
