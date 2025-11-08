@@ -1,0 +1,17 @@
+/*
+=====================
+     FORMULARIO
+=====================
+*/
+
+/* Formulario de registro de usuario */
+.main-container-form {
+    margin: 0 1em;
+}
+
+@media (min-width: 768px) {
+    .main-container-form {
+        margin: 0 15em;
+    }
+}
+
