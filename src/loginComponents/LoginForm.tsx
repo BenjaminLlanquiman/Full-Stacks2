@@ -12,19 +12,32 @@ export default function LoginForm() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<LoginErrors>({});
   const navigate = useNavigate();
+  const [successMessage, setSuccessMessage] = useState("");
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
+  
+const handleSubmit = (e: FormEvent) => {
+  e.preventDefault();
 
-    const result = validateLogin({ email, password });
-    setErrors(result);
-    if (result.email || result.password) return;
+  const result = validateLogin({ email, password });
+  setErrors(result);
 
+  // ✅ Si hay errores, limpiar mensaje y detener
+  if (result.email || result.password) {
+    setSuccessMessage("");
+    return;
+  }
+
+  // ✅ Si NO hay errores → éxito
+  setSuccessMessage("¡Inicio de sesión exitoso!");
+
+  console.log("Email:", email);
+  console.log("Password:", password);
+
+  setTimeout(() => {
     navigate("/Home");
+  }, 4000);
+};
 
-    console.log("Email:", email);
-    console.log("Password:", password);
-  };
 
   const onSwitchToRegister = () => {
     console.log("Switching to registration form...");
@@ -36,6 +49,14 @@ export default function LoginForm() {
     <Navbar />
       <article className="main-container">
         <div className="login-page">
+
+
+           {/* ✅ MENSAJE DE ÉXITO */}
+          {successMessage && (
+            <p style={{ color: "green", fontSize: "14px", marginBottom: "15px" }}>
+              {successMessage}
+            </p>
+          )}
 
             {/* ✅ FORMULARIO */}
             <form className="login-form" onSubmit={handleSubmit}>
