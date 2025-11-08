@@ -1,25 +1,10 @@
-import React from 'react';
+import Footer from '../componentes/Footer';
+import Navbar from "../componentes/Navbar.tsx";
 
 export default function Blogs() {
     return (
         <>
-            {/* Navbar */}
-            <nav className="navbar bg-dark text-white px-4 d-flex justify-content-between align-items-center">
-                <p className="h4 m-0">MoviE-Store</p>
-                <ul className="nav">
-                    <li className="nav-item"><a className="nav-link text-white" href="./home_tienda.html">Home</a></li>
-                    <li className="nav-item"><a className="nav-link text-white" href="./productos.html">Productos</a></li>
-                    <li className="nav-item"><a className="nav-link text-white" href="./nosotros.html">Nosotros</a></li>
-                    <li className="nav-item"><a className="nav-link active text-warning" href="./blogs.html">Blogs</a></li>
-                    <li className="nav-item"><a className="nav-link text-white" href="./contacto_tienda.html">Contacto</a></li>
-                </ul>
-                <p className="m-0">
-                    <a className="text-white" href="./carrito_compras.html">
-                        <i className="fa-solid fa-cart-shopping"></i> Cart (<span className="cant-pedido">0</span>)
-                    </a>
-                </p>
-            </nav>
-
+          <Navbar />
             {/* Main content */}
             <main className="container my-5">
                 <h1 className="mb-4">Noticias Importantes</h1>
@@ -54,10 +39,7 @@ export default function Blogs() {
                 </section>
             </main>
 
-            {/* Footer */}
-            <footer className="bg-dark text-white text-center py-3">
-                <p>&copy; 2025 MoviE-Store. Todos los derechos reservados.</p>
-            </footer>
+           <Footer />
         </>
     );
 }

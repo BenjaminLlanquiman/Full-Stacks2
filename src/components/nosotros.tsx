@@ -1,34 +1,16 @@
 import React from 'react';
+import Footer from "../componentes/Footer.tsx";
+import Navbar from "../componentes/Navbar.tsx";
+import '../style/NavBar.css'
+
 
 const Nosotros: React.FC = () => {
     return (
         <>
-            {/* Navbar */}
-            <header className="bg-dark py-3">
-                <nav className="container d-flex justify-content-center">
-                    <ul className="nav">
-                        <li className="nav-item">
-                            <a className="nav-link text-white" href="./home_tienda.html">Home</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link text-white" href="./productos.html">Productos</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link text-white fw-bold" href="./nosotros.html">Nosotros</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link text-white" href="./blogs.html">Blogs</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link text-white" href="./contacto.html">Contacto</a>
-                        </li>
-                    </ul>
-                </nav>
-            </header>
-
+            <Navbar />
             {/* Main content */}
             <main className="container my-5">
-                <h1 className="text-center mb-5 text-primary">Conoce nuestro propósito</h1>
+                <h1 className="text-center mb-5 text-dark">Conoce nuestro propósito</h1>
 
                 <div className="mb-5">
                     <img
@@ -68,10 +50,7 @@ const Nosotros: React.FC = () => {
                 </div>
             </main>
 
-            {/* Footer */}
-            <footer className="bg-dark text-white text-center py-3">
-                <p>© 2025 MoviE-Store. Todos los derechos reservados.</p>
-            </footer>
+            <Footer />
         </>
     );
 };
