@@ -20,6 +20,8 @@ const buscarPeliculaPorId = (id:string|undefined) => {
 
     const pelicula = peliculas.find(peli => peli.id === numId);
 
+    
+
     return pelicula;
 }
 

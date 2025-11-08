@@ -17,6 +17,7 @@ export const Routes = () => {
         {path: '/Nosotros', element: <Nosotros />},
         {path: '/Blogs', element: <Blogs />},
         {path: '/Contacto', element:<Contacto />}
+
     ])
 
     return routes
