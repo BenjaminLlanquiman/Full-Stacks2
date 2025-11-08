@@ -32,6 +32,8 @@ export const App = () => {
         setCarrito(prev => prev.filter(item => item.id !== idProducto))
     }
 
+    const limpiarCarrito = () => setCarrito([])
+
     return(
         <BrowserRouter>
             <Navbar cantProd={carrito.length}/>
@@ -39,6 +41,7 @@ export const App = () => {
                 carrito={carrito}
                 eliminarProd={eliminarDelCarrito}
                 agregarProd={agregarAlCarrito}
+                limpiarCarrito={limpiarCarrito}
             />
             <Footer />
         </BrowserRouter>

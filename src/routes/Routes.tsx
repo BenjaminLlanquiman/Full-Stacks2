@@ -14,15 +14,16 @@ interface RoutesProps {
     carrito: PeliculaType[];
     agregarProd: (idProd: number) => void;
     eliminarProd: (idProd: number) => void;
+    limpiarCarrito: () => void;
 }
 
-export const Routes = ({carrito, agregarProd, eliminarProd}:RoutesProps) => {
+export const Routes = ({carrito, agregarProd, eliminarProd, limpiarCarrito}:RoutesProps) => {
     return(
         <ReactRoutes>
             <Route path="/" element={<HomeTienda />}/>
             <Route path="/productos" element={<Productos agregarProd = {agregarProd}/>} />
             <Route path="/detalle-pelicula/:id" element={<DetalleProducto agregarProd = {agregarProd} />} />
-            <Route path="/carrito" element={<CarritoCompras carrito={carrito} eliminarProd = {eliminarProd} />} />
+            <Route path="/carrito" element={<CarritoCompras carrito={carrito} eliminarProd = {eliminarProd} limpiarCarrito={limpiarCarrito} />} />
             <Route path="/login" element={<LoginForm />}/>
             <Route path="/nosotros" element={<Nosotros />}/>
             <Route path="/blogs" element={<Blogs />}/>
