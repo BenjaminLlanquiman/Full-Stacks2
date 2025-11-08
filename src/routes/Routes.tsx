@@ -3,6 +3,12 @@ import { Productos } from "../productosComponent/components/Productos"
 import { DetalleProducto } from "../productosComponent/components/DetalleProducto"
 import { CarritoCompras } from "../carritoCompraComponent/CarritoCompras"
 import type { PeliculaType } from "../productosComponent/datosProductos"
+import HomeTienda from "../homeComponents/home_tienda"
+import LoginForm from "../loginComponents/LoginForm"
+import Nosotros from "../components/nosotros"
+import Blogs from "../components/blogs"
+import Contacto from "../components/contacto"
+import { RegistroUsuario } from "../registroComponent/components/RegistroUsuario"
 
 interface RoutesProps {
     carrito: PeliculaType[];
@@ -33,6 +39,12 @@ export const Routes = ({carrito, agregarProd, eliminarProd}:RoutesProps) => {
             <Route path="/" element={<Productos agregarProd = {agregarProd}/>} />
             <Route path="/detalle-pelicula/:id" element={<DetalleProducto agregarProd = {agregarProd} />} />
             <Route path="/carrito" element={<CarritoCompras carrito={carrito} eliminarProd = {eliminarProd} />} />
+            <Route path="/Home" element={<HomeTienda />}/>
+            <Route path="/Login" element={<LoginForm />}/>
+            <Route path="/Nosotros" element={<Nosotros />}/>
+            <Route path="/Blogs" element={<Blogs />}/>
+            <Route path="/Contacto" element={<Contacto />}/>
+            <Route path="/registrarse" element={<RegistroUsuario tituloPagina="Registrarse" />}/>
         </ReactRoutes>
     );
 }

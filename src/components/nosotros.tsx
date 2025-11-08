@@ -1,13 +1,13 @@
 import React from 'react';
-import Footer from "../componentes/Footer.tsx";
-import Navbar from "../componentes/Navbar.tsx";
+//import Footer from "../componentes/Footer.tsx";
+//import Navbar from "../componentes/Navbar.tsx";
 import '../style/NavBar.css'
 
 
 const Nosotros: React.FC = () => {
     return (
         <>
-            <Navbar />
+            {/*<Navbar />*/}
             {/* Main content */}
             <main className="container my-5">
                 <h1 className="text-center mb-5 text-dark">Conoce nuestro propósito</h1>
@@ -50,7 +50,7 @@ const Nosotros: React.FC = () => {
                 </div>
             </main>
 
-            <Footer />
+            {/*<Footer />*/}
         </>
     );
 };

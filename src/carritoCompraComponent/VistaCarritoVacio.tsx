@@ -1,7 +1,7 @@
 
 export const VistaCarritoVacio = () => {
     return(
-        <div className="row mx-md-5 pagina-carrito-vacio">
+        <div className="row mx-md-5 mb-3 mb-md-5 pagina-carrito-vacio">
             <div className="col-md-6 ps-md-4 pe-0 d-flex flex-column justify-content-evenly bg-secondary-subtle texto-carrito-vacio">
                 <h2>Tu carrito está vacío</h2>
                 <p>Agrega películas en tu carrito de compras para visualizarlas acá.</p>

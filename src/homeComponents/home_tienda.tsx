@@ -1,15 +1,15 @@
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "../style/home_tienda.css";
 
-import Navbar from "../componentes/Navbar";
-import Footer from "../componentes/Footer";
+//import Navbar from "../componentes/Navbar";
+//import Footer from "../componentes/Footer";
 import {Link} from 'react-router-dom';
 
 export default function HomeTienda() {
   return (
     <>
 
-      <Navbar />
+      {/*<Navbar />*/}
       {/* CONTENIDO PRINCIPAL */}
       <article className="main-container">
         {/* Opciones usuario */}
@@ -99,7 +99,7 @@ export default function HomeTienda() {
           </div>
         </section>
       </article>
-      <Footer />  
+      {/*<Footer />*/}
     </>
   );
 }

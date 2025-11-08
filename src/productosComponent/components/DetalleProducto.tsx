@@ -25,7 +25,7 @@ export const DetalleProducto = ({agregarProd}:DetalleProductoProps) => {
     if(!pelicula) return <p>Pelicula no encontrada </p>
 
     return(
-        <main className="container-sm bg-secondary-subtle">
+        <main className="container-sm bg-secondary-subtle my-3 my-md-5">
             <div className="row">
                 <div className="col-md-4 p-0">
                     <img src={pelicula.imagenSrc} alt={pelicula.imagenAlt} className="d-block h-100 w-100 rounded img-fluid"/>

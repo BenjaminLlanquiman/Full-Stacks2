@@ -1,10 +1,10 @@
-import Footer from '../componentes/Footer';
-import Navbar from "../componentes/Navbar.tsx";
+//import Footer from '../componentes/Footer';
+//import Navbar from "../componentes/Navbar.tsx";
 
 export default function Blogs() {
     return (
         <>
-          <Navbar />
+          {/*<Navbar />*/}
             {/* Main content */}
             <main className="container my-5">
                 <h1 className="mb-4">Noticias Importantes</h1>
@@ -39,7 +39,7 @@ export default function Blogs() {
                 </section>
             </main>
 
-           <Footer />
+           {/*<Footer />*/}
         </>
     );
 }
