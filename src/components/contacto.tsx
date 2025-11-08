@@ -1,11 +1,8 @@
 import React from 'react';
-import Footer from '../componentes/Footer';
-import Navbar from "../componentes/Navbar.tsx";
 
 const Contacto: React.FC = () => {
     return (
         <>
-        <Navbar />
         <div className="d-flex justify-content-center align-items-center vh-100 bg-white">
             <div className="p-4 rounded shadow bg-white" style={{ maxWidth: '500px', width: '100%' }}>
                 <h1 className="text-center mb-4 text-primary">MoviE-Store</h1>
@@ -19,7 +16,7 @@ const Contacto: React.FC = () => {
                             placeholder="Nombre"
                             required
                         />
-                        <div className="form-text text-danger">Debe ingresar el nombre.</div>
+                        {/*<div className="form-text text-danger">Debe ingresar el nombre.</div>*/}
                     </div>
 
                     <div className="mb-3">
@@ -31,9 +28,9 @@ const Contacto: React.FC = () => {
                             placeholder="Ej: pia@duoc.cl"
                             required
                         />
-                        <div className="form-text text-danger">
+                        {/*<div className="form-text text-danger">
                             Correo inválido: debe terminar en @duoc.cl, @profesor.duoc.cl o @gmail.com.
-                        </div>
+                        </div>*/}
                     </div>
 
                     <div className="mb-3">
@@ -46,7 +43,7 @@ const Contacto: React.FC = () => {
                             maxLength={500}
                             required
                         ></textarea>
-                        <div className="form-text text-danger">Solo se permite hasta 500 caracteres.</div>
+                        {/*<div className="form-text text-danger">Solo se permite hasta 500 caracteres.</div>*/}
                     </div>
 
                     <div className="d-grid">
@@ -57,8 +54,6 @@ const Contacto: React.FC = () => {
                 </form>
             </div>
             </div>
-
-            <Footer />
         </>
     );
 };
