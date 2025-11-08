@@ -3,15 +3,9 @@ import type { PeliculaType } from "./productosComponent/datosProductos"
 import { getProductos } from "./productosComponent/accionesProductos"
 import { BrowserRouter } from "react-router-dom"
 import { Routes } from "./routes/Routes"
-//import { Navbar } from "./Navbar"
-//import { RegistroUsuario } from "./registroComponent/components/RegistroUsuario";
-//import { Productos } from "./productosComponent/components/Productos"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Navbar from "./componentes/Navbar"
 import Footer from "./componentes/Footer"
-//import './App.css'
-//import './index.css'
-//import { DetalleProducto } from "./productosComponent/components/DetalleProducto"
 
 export const App = () => {
     const peliculas = getProductos()
