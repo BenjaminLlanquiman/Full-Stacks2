@@ -1,22 +1,17 @@
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "../style/home_tienda.css";
-
-//import Navbar from "../componentes/Navbar";
-//import Footer from "../componentes/Footer";
 import {Link} from 'react-router-dom';
 
 export default function HomeTienda() {
   return (
     <>
-
-      {/*<Navbar />*/}
       {/* CONTENIDO PRINCIPAL */}
       <article className="main-container">
         {/* Opciones usuario */}
         <div className="usuario-container">
           <ul>
-            <li><Link to="/Login">Iniciar sesión</Link></li>
-            <li><a href="#">Registrar usuario</a></li>
+            <li><Link to="/login">Iniciar sesión</Link></li>
+            <li><Link to="/registro-usuario">Registrar usuario</Link></li>
           </ul>
         </div>
 
@@ -32,7 +27,7 @@ export default function HomeTienda() {
             </p>
 
             <div className="btn-explorar-prod">
-              <Link to="/">Explorar catálogo</Link>
+              <Link to="/productos">Explorar catálogo</Link>
             </div>
           </div>
 

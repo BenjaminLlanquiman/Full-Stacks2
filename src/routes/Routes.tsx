@@ -15,36 +15,20 @@ interface RoutesProps {
     agregarProd: (idProd: number) => void;
     eliminarProd: (idProd: number) => void;
 }
-//import LoginForm from '../loginComponents/LoginForm';
-//import HomeTienda from "../homeComponents/home_tienda";
-//import Nosotros from "../components/nosotros";
-//import Contacto from "../components/contacto";
-//import Blogs from "../components/blogs";
-//
-//
-//export const Routes = () => {
-//    const routes = useRoutes([
-//        {path: "/", element: <Productos />},
-//        {path: "/detalle-pelicula/:id", element: <DetalleProducto />},
-//        {path: '/Home', element: <HomeTienda />},
-//        {path: '/Login', element: <LoginForm />},
-//        {path: '/Nosotros', element: <Nosotros />},
-//        {path: '/Blogs', element: <Blogs />},
-//        {path: '/Contacto', element:<Contacto />}
-//    ])
 
 export const Routes = ({carrito, agregarProd, eliminarProd}:RoutesProps) => {
     return(
         <ReactRoutes>
-            <Route path="/" element={<Productos agregarProd = {agregarProd}/>} />
+            <Route path="/" element={<HomeTienda />}/>
+            <Route path="/productos" element={<Productos agregarProd = {agregarProd}/>} />
             <Route path="/detalle-pelicula/:id" element={<DetalleProducto agregarProd = {agregarProd} />} />
             <Route path="/carrito" element={<CarritoCompras carrito={carrito} eliminarProd = {eliminarProd} />} />
-            <Route path="/Home" element={<HomeTienda />}/>
-            <Route path="/Login" element={<LoginForm />}/>
-            <Route path="/Nosotros" element={<Nosotros />}/>
-            <Route path="/Blogs" element={<Blogs />}/>
-            <Route path="/Contacto" element={<Contacto />}/>
-            <Route path="/registrarse" element={<RegistroUsuario tituloPagina="Registrarse" />}/>
+            <Route path="/login" element={<LoginForm />}/>
+            <Route path="/nosotros" element={<Nosotros />}/>
+            <Route path="/blogs" element={<Blogs />}/>
+            <Route path="/contacto" element={<Contacto />}/>
+            <Route path="/registro-usuario" element={<RegistroUsuario tituloPagina="Registro de Usuario" />}/>
+            <Route path="*" element={<h1 className="fs-1 text-center my-5">Página no encontrada</h1>}/>
         </ReactRoutes>
     );
 }

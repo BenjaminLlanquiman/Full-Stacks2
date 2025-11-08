@@ -1,3 +1,4 @@
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import "../style/navbar.css";
 import {Link} from 'react-router-dom';
 
@@ -11,15 +12,14 @@ export default function Navbar({cantProd}:NavbarProps) {
       <p className="nombre-pagina">MoviE–Store</p>
 
       <ul>
-        <li><Link to="/home">Home</Link></li>
-        <li><Link to="/">Productos</Link></li>
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/productos">Productos</Link></li>
         <li><Link to="/nosotros">Nosotros</Link></li>
         <li><Link to="/blogs">Blogs</Link></li>
         <li><Link to="/contacto">Contacto</Link></li>
       </ul>
       <p>
-        {/*<a href="./carrito_compras.html">Cart ({cantProd})</a>*/}
-        <Link to="/carrito">{`Cart (${cantProd})`}</Link>
+        <Link to="/carrito"><i className="fa-solid fa-cart-shopping"></i>{` Cart (${cantProd})`}</Link>
       </p>
     </nav>
   );
