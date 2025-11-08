@@ -7,14 +7,12 @@ import '../style/NavBar.css'
 const Nosotros: React.FC = () => {
     return (
         <>
-            {/*<Navbar />*/}
-            {/* Main content */}
             <main className="container my-5">
                 <h1 className="text-center mb-5 text-dark">Conoce nuestro propósito</h1>
 
                 <div className="mb-5">
                     <img
-                        src="/assets/img/nuestro_equipo.jpg"
+                        src="imgPosters/nuestro_equipo.jpg"
                         alt="Nuestro equipo"
                         className="img-fluid rounded mb-3"
                     />
@@ -37,7 +35,7 @@ const Nosotros: React.FC = () => {
 
                 <div className="mb-5">
                     <img
-                        src="/assets/img/comunidad.jpg"
+                        src="imgPosters/comunidad.jpg"
                         alt="Comunidad"
                         className="img-fluid rounded mb-3"
                     />
@@ -49,8 +47,6 @@ const Nosotros: React.FC = () => {
                     </p>
                 </div>
             </main>
-
-            {/*<Footer />*/}
         </>
     );
 };
