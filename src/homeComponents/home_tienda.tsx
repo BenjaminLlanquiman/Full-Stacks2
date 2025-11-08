@@ -1,8 +1,14 @@
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "../style/home_tienda.css";
 import {Link} from 'react-router-dom';
+import { getProductos } from "../productosComponent/accionesProductos";
+import { TarjetaProductoHome } from "./TarjetaProductoHome";
+
 
 export default function HomeTienda() {
+
+  const peliculas = getProductos()
+
   return (
     <>
       {/* CONTENIDO PRINCIPAL */}
@@ -38,80 +44,10 @@ export default function HomeTienda() {
         </header>
 
         {/* PRODUCTOS RECOMENDADOS */}
-        {/* Los Siete Pecados Capitales */}
-
         <section className="productos-recomendados">
-          <div className="producto-card">
-            <Link className="ancla-img" to="/detalle-pelicula/0">
-              <img src="./imgPosters/seven-poster.jpg" alt="Imagen poster Seven" />
-            </Link>
-            <div className="prod-titulo">
-              <Link className="ancla-titulo-prod" to="./detalle-pelicula/0">
-                Los Siete Pecados Capitales
-              </Link>
-            </div>
-            <p>$1000</p>
-          </div>
-
-
-          {/* Rápido y Furioso: Reto Tokio */}
-
-          <div className="producto-card">
-             <Link className="ancla-img" to="/detalle-pelicula/3">
-              <img src="./imgPosters/fast-furious-poster.jpg" alt="Imagen Rapido y Furioso" />
-            </Link>
-            <div className="prod-titulo">
-              <Link className="ancla-titulo-prod" to="./detalle-pelicula/3">
-                Rápido y Furioso: Reto Tokio
-              </Link>
-            </div>
-            <p>$1000</p>
-          </div>
-
-
-          {/* Matilda */}
-
-          <div className="producto-card">
-            <Link className="ancla-img" to="/detalle-pelicula/1">
-              <img src="./imgPosters/matilda-poster.jpg" alt="Imagen poster Matilda" />
-            </Link>
-            <div className="prod-titulo">
-              <Link className="ancla-titulo-prod" to="./detalle-pelicula/1">
-                Matilda
-              </Link>
-            </div>
-            <p>$1000</p>
-          </div>
-
-          {/* Mad Max: Furia en la carretera */}
-
-          <div className="producto-card">
-            <Link className="ancla-img" to="/detalle-pelicula/4">
-              <img src="./imgPosters/mad-max-poster.jpg" alt="Imagen poster Mad Max" />
-            </Link>
-            <div className="prod-titulo">
-              <Link className="ancla-titulo-prod" to="/detalle-pelicula/4">
-              Mad Max: Furia en la carretera
-              </Link>
-            </div>
-            <p>$1000</p>
-          </div>
-
-
-          {/* SuperBad */}
-
-          <div className="producto-card">
-            <Link className="ancla-img" to="/detalle-pelicula/2">
-              <img src="./imgPosters/superbad-poster.jpg" alt="Imagen poster SuperBad" />
-            </Link>
-            <div className="prod-titulo">
-              <Link className="ancla-titulo-prod" to="/detalle-pelicula/2">SuperBad</Link>
-            </div>
-            <p>$1000</p>
-          </div>
-        </section>
+            {peliculas.map((pelicula, index) => (<TarjetaProductoHome key={index} producto={pelicula} />))}
+       </section>
       </article>
-      {/*<Footer />*/}
     </>
   );
 }
