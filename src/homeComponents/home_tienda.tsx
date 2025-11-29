@@ -20,6 +20,7 @@ export default function Home_tienda() {
           <ul>
             <li onClick={() => navigate("/login")}>Iniciar sesión</li>
             <li onClick={() => navigate("/registro-usuario")}>Registrar usuario</li>
+            <li onClick={() => navigate("/registro-producto")}>Registrar producto</li>
           </ul>
         </div>
 
