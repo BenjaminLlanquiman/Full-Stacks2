@@ -9,7 +9,7 @@ export const obtenerUsuarios = async () => {
 };
 
 export const crearUsuario = async (usuario: Usuario) => {
-    return api.post("", usuario); // <-- SIN "/"
+    return api.post("", usuario); 
 };
 
 export const eliminarUsuario = async (id: number) => {

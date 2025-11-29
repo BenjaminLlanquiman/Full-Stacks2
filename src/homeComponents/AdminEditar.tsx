@@ -43,7 +43,7 @@ useEffect(() => {
     try {
       await actualizarUsuario(Number (id), usuario);
       alert("Usuario actualizado correctamente 🎉");
-      navigate("/home-admin");1
+      navigate("/admin");1
     } catch (err) {
       alert("Error al actualizar usuario");
     }
