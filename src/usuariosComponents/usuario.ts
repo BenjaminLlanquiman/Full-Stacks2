@@ -1,5 +1,5 @@
 export interface Usuario {
-  id?: number; // opcional si tu backend lo asigna
+  id?: number; 
   run: string;
   nombre: string;
   apellidos: string;

@@ -59,11 +59,11 @@ export const RegistroUsuario = ({tituloPagina}:RegistroUsuarioProp) => {
             correo: data.correo,
             password: data.password,
             regiones: data.regiones,
-            fechaNacimiento: data.fechaNacimiento, // 👈 importante este cambio
+            fechaNacimiento: data.fechaNacimiento, 
             telefono: data.telefono
         };
 
-        console.log("📤 Enviando al backend:", usuario);
+        console.log(" Enviando al backend:", usuario);
 
             await crearUsuario(usuario);
 

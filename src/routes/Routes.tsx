@@ -11,6 +11,8 @@ import Contacto from "../contactoComponents/contacto"
 import HomeAdmin from "../homeComponents/home_admin"
 import { RegistroUsuario } from "../registroComponent/components/RegistroUsuario"
 import {RegistroProducto} from "../registroProductoComponents/RegistroProducto"
+import AdminEditar from "../homeComponents/AdminEditar"
+
 
 interface RoutesProps {
     carrito: PeliculaType[];
@@ -33,7 +35,7 @@ export const Routes = ({carrito, agregarProd, eliminarProd, limpiarCarrito}:Rout
             { path:"*", element: <h1 className="fs-1 text-center my-5">Página no encontrada</h1>},
             { path:"/admin",element: <HomeAdmin/>},
             { path:"/registro-producto",element: <RegistroProducto tituloPagina="Registro Productos"/>}
-            
+            { path:"//Editar/:id", element:<AdminEditar/>}
         ]);
 
         return routes;
