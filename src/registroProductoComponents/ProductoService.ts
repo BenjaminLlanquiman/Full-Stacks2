@@ -1,5 +1,22 @@
 // @ts-ignore
 import apiProducto from "../axiosConfig/axiosConfigProd";
+import type { Producto } from "./Producto";
 
-export const obtenerProductos = () => apiProducto.get("/");
-export const crearProducto = (producto: any) => apiProducto.post("", producto);
+export const obtenerProductoPorId = (id: number) => apiProducto.get(`/${id}`);
+
+export const obtenerProductos = async () => {
+    const response = await apiProducto.get("");
+    return response.data;
+};
+
+export const crearProducto = async (producto: Producto) => {
+    return apiProducto.post("", producto); 
+};
+
+export const eliminarProducto = async (id: number) => {
+    return apiProducto.delete(`/${id}`);
+};
+
+export const actualizarProducto = async (id: number, producto: Producto) => {
+    return apiProducto.put(`/${id}`, producto);
+};

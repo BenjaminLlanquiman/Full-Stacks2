@@ -11,6 +11,8 @@ import Contacto from "../contactoComponents/contacto"
 import HomeAdmin from "../homeComponents/home_admin"
 import { RegistroUsuario } from "../registroComponent/components/RegistroUsuario"
 import {RegistroProducto} from "../registroProductoComponents/RegistroProducto"
+import ProductoEditar from "../registroProductoComponents/ProductoEditar"
+import ProductoAdmin from "../registroProductoComponents/ProductoAdmin"
 import AdminEditar from "../homeComponents/AdminEditar"
 
 
@@ -34,8 +36,10 @@ export const Routes = ({carrito, agregarProd, eliminarProd, limpiarCarrito}:Rout
             { path:"/registro-usuario", element: <RegistroUsuario tituloPagina="Registro de Usuario" />},
             { path:"*", element: <h1 className="fs-1 text-center my-5">Página no encontrada</h1>},
             { path:"/admin",element: <HomeAdmin/>},
-            { path:"/registro-producto",element: <RegistroProducto tituloPagina="Registro Productos"/>}
-            { path:"//Editar/:id", element:<AdminEditar/>}
+            { path:"/registro-producto",element: <RegistroProducto tituloPagina="Registro Productos"/>},
+            { path:"//Editar/:id", element:<AdminEditar/>},
+            { path:"//EditarProducto/:id", element:<ProductoEditar/>},
+            { path:"/producto-admin", element:<ProductoAdmin/>}
         ]);
 
         return routes;

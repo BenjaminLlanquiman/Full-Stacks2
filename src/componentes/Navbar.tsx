@@ -17,7 +17,8 @@ export default function Navbar({cantProd}:NavbarProps) {
                 <li onClick={() => navigate("/nosotros")}>Nosotros</li>
                 <li onClick={() => navigate("/blogs")}>Blogs</li>
                 <li onClick={() => navigate("/contacto")}>Contacto</li>
-                <li onClick={() => navigate("/admin")}>Editar</li>
+                <li onClick={() => navigate("/admin")}>Editar Usuarios</li>
+                <li onClick={() => navigate("/producto-admin")}>Editar Productos</li>
             </ul>
 
             <p className="carrito-compras" onClick={() => navigate("/carrito")}><i className="fa-solid fa-cart-shopping"></i>{` Cart (${cantProd})`}</p>
