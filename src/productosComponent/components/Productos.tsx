@@ -16,7 +16,9 @@ export const Productos = ({agregarProd}:ProductosProps) => {
             <h1 className="text-center text-uppercase fs-1 my-5">productos</h1>
             
             <article className="row mx-lg-4 mx-md-3 mx-sm-5">
-                {peliculas.map((pelicula, index) => (<TarjetaProducto key={index} agregarProd={agregarProd} producto={pelicula} />))}
+                {peliculas.map((pelicula, index) => (
+                    
+                    <TarjetaProducto key={index} agregarProd={agregarProd} producto={pelicula} />))}
             </article>
         </main>
         </>

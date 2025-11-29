@@ -147,3 +147,70 @@ body {
     font-size: 18px;
     font-weight: bold;
 }
+/* 📱 RESPONSIVE FIX */
+@media (max-width: 768px) {
+
+  .main-container {
+    margin: 0 15px;
+  }
+
+  /* Header usuario */
+  .usuario-container {
+    justify-content: center;
+    margin: 20px 0;
+  }
+
+  /* 🔥 Banner responsive */
+  .banner-pagina {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+    gap: 25px;
+  }
+
+  .banner-pagina img {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    object-fit: cover;
+  }
+
+  .descripcion-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .btn-explorar-prod {
+    justify-content: center;
+  }
+
+  .btn-explorar-prod p {
+    width: 100%;
+    max-width: 250px;
+    padding: 15px;
+    margin: 10px auto;
+  }
+
+  /* 🛒 Productos recomendados responsive */
+  .productos-recomendados {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .producto-card img {
+    height: 250px;
+  }
+}
+
+/* 📱 Extra pequeño (Android chicos / iPhone SE) */
+@media (max-width: 480px) {
+  .productos-recomendados {
+    grid-template-columns: 1fr;
+  }
+
+  .producto-card img {
+    height: 220px;
+  }
+}
+ 

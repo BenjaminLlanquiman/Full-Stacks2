@@ -6,6 +6,7 @@
 
 /* Formulario de registro de usuario */
 .main-container-form {
+    display: grid;
     margin: 0 1em;
 }
 
