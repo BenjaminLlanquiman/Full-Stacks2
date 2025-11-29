@@ -8,6 +8,7 @@ import LoginForm from "../loginComponents/LoginForm"
 import Nosotros from "../nosotrosComponents/nosotros"
 import Blogs from "../blogsComponents/blogs"
 import Contacto from "../contactoComponents/contacto"
+import HomeAdmin from "../homeComponents/home_admin"
 import { RegistroUsuario } from "../registroComponent/components/RegistroUsuario"
 
 interface RoutesProps {
@@ -28,7 +29,9 @@ export const Routes = ({carrito, agregarProd, eliminarProd, limpiarCarrito}:Rout
             { path:"/blogs", element: <Blogs />},
             { path:"/contacto", element: <Contacto />},
             { path:"/registro-usuario", element: <RegistroUsuario tituloPagina="Registro de Usuario" />},
-            { path:"*", element: <h1 className="fs-1 text-center my-5">Página no encontrada</h1>}
+            { path:"*", element: <h1 className="fs-1 text-center my-5">Página no encontrada</h1>},
+            { path:"/admin",element: <HomeAdmin/>}
+            
         ]);
 
         return routes;

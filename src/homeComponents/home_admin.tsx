@@ -1,13 +1,9 @@
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "../style/home_tienda.css";
 import { useNavigate } from 'react-router-dom';
-import { getProductos } from "../productosComponent/accionesProductos";
-import { TarjetaProductoHome } from "./TarjetaProductoHome";
 
+export default function home_admin() {
 
-export default function Home_tienda() {
-
-  const peliculas = getProductos()
 
   const navigate = useNavigate()
 
@@ -44,11 +40,6 @@ export default function Home_tienda() {
             alt="Imagen de la tienda"
           />
         </header>
-
-        {/* PRODUCTOS RECOMENDADOS */}
-        <section className="productos-recomendados">
-            {peliculas.map((pelicula, index) => (<TarjetaProductoHome key={index} producto={pelicula} />))}
-       </section>
       </article>
     </>
   );

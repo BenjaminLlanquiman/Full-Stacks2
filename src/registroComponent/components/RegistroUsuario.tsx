@@ -4,6 +4,7 @@ import { RegistroSelect } from './RegistroSelect'
 import { validarRUT, validarCorreo } from '../../validaciones/validacionesRegistroUsuario'
 import '../RegistroUsuario.css'
 import { useState } from "react";
+import { crearUsuario } from "../../usuariosComponents/usuarioService";
 
 interface RegistroUsuarioProp {
     tituloPagina: string;
@@ -48,8 +49,23 @@ export const RegistroUsuario = ({tituloPagina}:RegistroUsuarioProp) => {
         {valor: "magallanes", valorTexto: "Magallanes y de la Antártica Chilena"}
     ]
 
-    const onSubmit = (data: any) => {
-        console.log(data)
+    const onSubmit = async (data: any) => {
+         try {console.log("Enviando",data);
+
+            const usuario = {
+            run: data.run,
+            nombre: data.nombre,
+            apellidos: data.apellidos,
+            correo: data.correo,
+            password: data.password,
+            regiones: data.regiones,
+            fechaNacimiento: data.fechaNacimiento, // 👈 importante este cambio
+            telefono: data.telefono
+        };
+
+        console.log("📤 Enviando al backend:", usuario);
+
+            await crearUsuario(usuario);
 
         setRegistroExitoso(true)
 
@@ -57,7 +73,12 @@ export const RegistroUsuario = ({tituloPagina}:RegistroUsuarioProp) => {
             reset()
             setRegistroExitoso(false);
         }, 2000);
-    }
+    } catch(error){
+        console.error("error al registrar usuario", error)
+        alert("hubo un error al registrar al usuario");
+        
+        }
+    };
 
     return(
         <>
@@ -140,9 +161,10 @@ export const RegistroUsuario = ({tituloPagina}:RegistroUsuarioProp) => {
                 </fieldset>
 
                 <RegistroInput
-                    etiqueta = "fecha-nac"
+                    etiqueta = "fechaNacimiento"
                     type = "date"
                     etiquetaTextoOpcional = "fecha de nacimiento"
+                    registro={register("fechaNacimiento", {required: true})}
                 />
 
                 <RegistroInput
@@ -150,7 +172,7 @@ export const RegistroUsuario = ({tituloPagina}:RegistroUsuarioProp) => {
                     type = "tel"
                     etiquetaTextoOpcional = "teléfono"
                     msgError = {errors.telefono ? "Teléfono inválido: Son 9 dígitos y no debes incluir '+56'." : ""}
-                    registro = {register("telefono", {pattern: {value:  /^(|[2-9]\d{8})$/, message: ""}})}
+                    registro = {register("telefono", {required: true, pattern: {value:  /^(|[2-9]\d{8})$/, message: ""}})}
                 />
 
                 <div className="text-center btn-container">
