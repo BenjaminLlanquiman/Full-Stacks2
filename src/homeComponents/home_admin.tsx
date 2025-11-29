@@ -1,46 +1,87 @@
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import "../style/home_tienda.css";
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import type { Usuario } from "../usuariosComponents/usuario";
+import { eliminarUsuario, obtenerUsuarios } from "../usuariosComponents/usuarioService";
 
-export default function home_admin() {
+export default function Home_admin() {
+  
+  const navigate = useNavigate();
+  const [usuarios, setUsuarios] = useState<Usuario[]>([]);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    cargarUsuarios();
+  }, []);
 
-  const navigate = useNavigate()
+  async function cargarUsuarios() {
+    try {
+      const data = await obtenerUsuarios();
+      setUsuarios(data);
+    } catch (err) {
+      console.error("Error al obtener usuarios:", err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function borrar(id?: number) {
+    if (!id) return;
+
+    if (!confirm("¿Seguro que deseas eliminar este usuario?")) return;
+
+    try {
+      await eliminarUsuario(id);
+      setUsuarios(usuarios.filter(u => u.id !== id));
+    } catch (error) {
+      alert("No se pudo eliminar el usuario.");
+      console.error(error);
+    }
+  }
 
   return (
-    <>
-      {/* CONTENIDO PRINCIPAL */}
-      <article className="main-container">
-        {/* Opciones usuario */}
-        <div className="usuario-container">
-          <ul>
-            <li onClick={() => navigate("/login")}>Iniciar sesión</li>
-            <li onClick={() => navigate("/registro-usuario")}>Registrar usuario</li>
-          </ul>
-        </div>
+    <div>
+      <h1 className="usuarios-wrapper h1.">Panel de usuarios</h1>
 
-        {/* BANNER */}
-        <header className="banner-pagina">
-          <div className="descripcion-container">
-            <h1>Tienda Online</h1>
+      {loading ? <p>Cargando usuarios...</p> : null}
 
-            <p>
-              Bienvenido a MoviE-Store, tu destino definitivo para explorar y adquirir
-              las mejores películas del momento. Aquí, te ofrecemos una amplia selección
-              de títulos que abarcan los géneros de acción, comedia y thrillers.
-            </p>
+      <button className= "btn-flotante " onClick={() => navigate("/registro-usuario")}>
+        Registrar Usuario
+      </button>
 
-            <div className="btn-explorar-prod">
-              <p onClick={() => navigate("/productos")}>Explorar catálogo</p>
+      <div  className="usuarios-container" style={{ display: "grid", gap: "20px", marginTop: "20px" }}>
+        {usuarios.length > 0 ? (
+          usuarios.map((u) => (
+            <div
+              key={u.id}
+              style={{
+                border: "1px solid gray",
+                padding: "15px",
+                borderRadius: "10px",
+              }}
+            >
+              <h3>{u.nombre} {u.apellidos}</h3>
+              <p><b>Correo:</b> {u.correo}</p>
+              <p><b>Región:</b> {u.regiones}</p>
+
+              <button
+                onClick={() => navigate(`/editar/${u.id}`)}
+                style={{ marginRight: "10px" }}
+              >
+                ✏ Editar
+              </button>
+
+              <button
+                onClick={() => borrar(u.id)}
+                style={{ background: "red", color: "white" }}
+              >
+                🗑 Eliminar
+              </button>
             </div>
-          </div>
-
-          <img
-            src="https://images.unsplash.com/photo-1581905764498-f1b60bae941a?q=80&w=464&auto=format&fit=crop&ixlib=rb-4.1.0"
-            alt="Imagen de la tienda"
-          />
-        </header>
-      </article>
-    </>
+          ))
+        ) : (
+          <p>No hay usuarios registrados</p>
+        )}
+      </div>
+    </div>
   );
 }

@@ -214,3 +214,207 @@ body {
   }
 }
  
+
+
+.usuarios-container {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.usuario-card {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  border-left: 6px solid #4a4aff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: 0.3s ease;
+}
+
+.usuario-card:hover {
+  transform: scale(1.02);
+}
+
+.usuario-card h2 {
+  margin: 0 0 10px;
+  font-size: 22px;
+  color: #111;
+  font-weight: bold;
+}
+
+.usuario-card p {
+  margin: 6px 0;
+  font-size: 15px;
+  color: #333;
+}
+
+.usuario-card span {
+  font-weight: bold;
+  color: #444;
+}
+
+.acciones {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.btn-editar, .btn-eliminar {
+  padding: 10px 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: 0.3s ease;
+}
+
+.btn-editar {
+  background: #008cff;
+  color: white;
+}
+
+.btn-editar:hover {
+  background: #006ad1;
+}
+
+.btn-eliminar {
+  background: #ff3b3b;
+  color: white;
+}
+
+.btn-eliminar:hover {
+  background: #d10000;
+}
+
+.sin-usuarios {
+  text-align: center;
+  font-size: 18px;
+  color: gray;
+  margin-top: 30px;
+}
+
+/* Centrar toda la página */
+.usuarios-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 30px;
+  text-align: center;
+}
+
+/* Título */
+.usuarios-wrapper h1 {
+  font-size: 32px;
+  margin-bottom: 15px;
+}
+
+.btn-flotante {
+  position: fixed;
+  bottom: 25px;   /* distancia desde abajo */
+  right: 25px;    /* distancia desde la derecha */
+  background: #4a4aff;
+  color: white;
+  padding: 14px 22px;
+  font-size: 16px;
+  border-radius: 50px;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease-in-out;
+}
+
+/* Animación al pasar el mouse */
+.btn-flotante:hover {
+  background: #2e2ee6;
+  transform: scale(1.05);
+}
+
+/* ----- CONTENEDOR GENERAL ----- */
+.editar-container {
+  max-width: 600px;
+  margin: 50px auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0px 8px 18px rgba(0, 0, 0, 0.1);
+  animation: fadeIn .4s ease;
+}
+
+/* Animación suave */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ----- TITULO ----- */
+.editar-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #222;
+}
+
+/* ----- FORMULARIO ----- */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+label {
+  font-weight: 600;
+  margin-top: 10px;
+  color: #333;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+input:focus {
+  border-color: #007bff;
+}
+
+/* ----- BOTONES ----- */
+.btn-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+}
+
+/* Guardar */
+.guardar {
+  background: #28a745;
+  color: white;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.guardar:hover {
+  background: #1e7e34;
+}
+
+/* Cancelar */
+.cancelar {
+  background: #dc3545;
+  color: white;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.cancelar:hover {
+  background: #b71f2a;
+}
