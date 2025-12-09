@@ -1,10 +1,21 @@
 import axios from "axios";
 
-const api = axios.create({
-  baseURL: "http://localhost:8080/api/v1/usuarios", // tu backend Spring Boot
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+export const createApi = (token: string | null) => {
+  const api = axios.create({
+    baseURL: "http://localhost:8080/api/v1/usuarios",
+    headers: {
+      "Content-Type": "application/json",
 
-export default api;
+    },
+  });
+
+  api.interceptors.request.use((config) => {
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config
+  });
+
+  return api;
+
+};

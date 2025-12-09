@@ -3,9 +3,18 @@ import { validateLogin } from "../validaciones/validacionesLogin.ts";
 import type { LoginErrors } from "../validaciones/validacionesLogin.ts";
 import "../style/loginForm.css";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from 'jwt-decode';
+import { useAuth } from '../context/AuthContext';
+import apiPublic from '../axiosConfig/axiosPublic';
 
+interface JwtPayLoad {
+    roles: string[];
+
+}
 
 export default function LoginForm() {
+    const {login} = useAuth();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState<LoginErrors>({});
@@ -13,7 +22,7 @@ export default function LoginForm() {
     const [successMessage, setSuccessMessage] = useState("");
 
   
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         
         const result = validateLogin({ email, password });
@@ -25,15 +34,36 @@ export default function LoginForm() {
           return;
         }
         
-        // Si NO hay errores → éxito
-        setSuccessMessage("¡Inicio de sesión exitoso!");
-        
-        console.log("Email:", email);
-        console.log("Password:", password);
-        
-        setTimeout(() => {
-          navigate("/");
-        }, 4000);
+        try {
+
+            const response = await apiPublic.post("auth/login", {
+                email,
+                password,
+            });
+            const token: string = response.data.token;
+
+            // ✅ Decode JWT
+            const tokenDecoded = jwtDecode<JwtPayLoad>(token);
+            const roleFromToken = tokenDecoded.roles[0];
+
+            const roleMapped = 
+                roleFromToken === "ROLE_ADMIN" ? "administrador" : "vendedor";
+            
+                login(token, roleMapped);
+                 
+                // Si NO hay errores → éxito
+                setSuccessMessage("¡Inicio de sesión exitoso!");
+
+
+            if (roleMapped === "administrador"){
+            navigate("/admin");
+    
+             } else {
+            navigate("/vendedor");
+            }
+        } catch (error){
+            alert("Correo o password incorrectos");
+        }
     };
 
 
@@ -44,9 +74,12 @@ export default function LoginForm() {
     return (
         <article className="main-container">
             <div className="login-page">
+
             {/* MENSAJE DE ÉXITO */}
             {successMessage && (
-                <p style={{ color: "green", fontSize: "14px", marginBottom: "15px" }}>{successMessage}</p>
+                <p style={{ color: "green", fontSize: "14px", marginBottom: "15px" }}>
+                    {successMessage}
+                    </p>
             )}
             {/* FORMULARIO */}
                 <form className="login-form my-3 my-md-5" onSubmit={handleSubmit}>
@@ -75,6 +108,7 @@ export default function LoginForm() {
                     )}
 
                     <button type="submit">Ingresar</button>
+
                     <p className="change-form">
                         ¿No tienes una cuenta?{" "}
                         <a
