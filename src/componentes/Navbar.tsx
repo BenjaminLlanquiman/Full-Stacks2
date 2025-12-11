@@ -40,21 +40,7 @@ export default function Navbar({cantProd}:NavbarProps) {
                 {` Cart (${cantProd})`}
             </p>
 
-            {!isAuthenticated ? (
-                <button onClick={() => navigate("/login")} className="btn-login">
-                    Ingresar
-                </button>
-            ) : (
-
-                <button
-                    onClick={() => {
-                        logout();
-                        navigate("/login");
-                    }}
-                    className="btn-logout">
-                        Cerrar sesión
-                </button>
-            )}
+       
         </nav>
     );
 }

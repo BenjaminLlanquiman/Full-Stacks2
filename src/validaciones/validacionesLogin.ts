@@ -1,11 +1,11 @@
 
 export interface LoginData {
-  email: string;
+  correo: string;
   password: string;
 }
 
 export interface LoginErrors {
-  email?: string;
+  correo?: string;
   password?: string;
 }
 
@@ -13,13 +13,13 @@ export function validateLogin(data: LoginData): LoginErrors {
   const errors: LoginErrors = {};
 
   // Validar email vacío
-  if (!data.email.trim()) {
-    errors.email = "El email es obligatorio";
+  if (!data.correo.trim()) {
+    errors.correo = "El email es obligatorio";
   } else {
     // Validar formato email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(data.email)) {
-      errors.email = "Ingresa un email válido";
+    if (!emailRegex.test(data.correo)) {
+      errors.correo = "Ingresa un email válido";
     }
   }
 

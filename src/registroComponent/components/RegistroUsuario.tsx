@@ -60,7 +60,8 @@ export const RegistroUsuario = ({tituloPagina}:RegistroUsuarioProp) => {
             password: data.password,
             regiones: data.regiones,
             fechaNacimiento: data.fechaNacimiento, 
-            telefono: data.telefono
+            telefono: data.telefono,
+            tipoUsuario: data.tipoUsuario
         };
 
         console.log(" Enviando al backend:", usuario);
@@ -159,6 +160,15 @@ export const RegistroUsuario = ({tituloPagina}:RegistroUsuarioProp) => {
                         registro = {register("regiones", {required: true})}
                     />
                 </fieldset>
+
+                  <div className="mb-4">
+                    <label htmlFor="tipo-usuario" className="form-label">Tipo de usuario</label>
+                    <select className="form-select" id="tipoUsuario" aria-label="Default select example">
+                        <option selected disabled>Seleccione un tipo de usuario</option>
+                        <option value="1">Administrador</option>
+                        <option value="2">Vendedor</option>
+                    </select>
+                </div>
 
                 <RegistroInput
                     etiqueta = "fechaNacimiento"

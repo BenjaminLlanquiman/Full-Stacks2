@@ -3,9 +3,11 @@ import "../style/home_tienda.css";
 import { useNavigate } from 'react-router-dom';
 import { getProductos } from "../productosComponent/accionesProductos";
 import { TarjetaProductoHome } from "./TarjetaProductoHome";
+import {useAuth} from "../context/AuthContext";
 
 
 export default function Home_tienda() {
+  const { role, isAuthenticated, logout } = useAuth();
 
   const peliculas = getProductos()
 
@@ -19,8 +21,14 @@ export default function Home_tienda() {
         <div className="usuario-container">
           <ul>
             <li onClick={() => navigate("/login")}>Iniciar sesión</li>
-            <li onClick={() => navigate("/registro-usuario")}>Registrar usuario</li>
+
+            {isAuthenticated && role === "administrador" && (
+
+                    <>
+                        <li onClick={() => navigate("/registro-usuario")}>Registrar usuario</li>
             <li onClick={() => navigate("/registro-producto")}>Registrar producto</li>
+                    </>
+                )}
           </ul>
         </div>
 

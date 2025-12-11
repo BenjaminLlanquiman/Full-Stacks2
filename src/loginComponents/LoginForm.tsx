@@ -15,7 +15,7 @@ interface JwtPayLoad {
 export default function LoginForm() {
     const {login} = useAuth();
 
-    const [email, setEmail] = useState("");
+    const [correo, setCorreo] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState<LoginErrors>({});
     const navigate = useNavigate();
@@ -25,11 +25,11 @@ export default function LoginForm() {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         
-        const result = validateLogin({ email, password });
+        const result = validateLogin({ correo, password });
         setErrors(result);
         
         // Si hay errores, limpiar mensaje y detener
-        if (result.email || result.password) {
+        if (result.correo || result.password) {
           setSuccessMessage("");
           return;
         }
@@ -37,7 +37,7 @@ export default function LoginForm() {
         try {
 
             const response = await apiPublic.post("auth/login", {
-                email,
+                correo,
                 password,
             });
             const token: string = response.data.token;
@@ -85,15 +85,15 @@ export default function LoginForm() {
                 <form className="login-form my-3 my-md-5" onSubmit={handleSubmit}>
                     <h2>Iniciar sesión</h2>
 
-                    <label>Email</label>
+                    <label>Correo</label>
                     <input
-                        type="email"
+                        type="correo"
                         placeholder="Ingresa tu email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        value={correo}
+                        onChange={(e) => setCorreo(e.target.value)}
                     />
-                    {errors.email && (
-                    <p style={{ color: "red", fontSize: "12px" }}>{errors.email}</p>
+                    {errors.correo && (
+                    <p style={{ color: "red", fontSize: "12px" }}>{errors.correo}</p>
                     )}
 
                     <label>Contraseña</label>
