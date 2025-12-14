@@ -18,15 +18,19 @@ function Usuarios() {
   // Registrar usuario de prueba
   const registrarUsuario = () => {
     const nuevo = {
-      run: "12345678-9",
-      nombre: "Juan",
-      apellidos: "Pérez",
-      correo: "juan@test.com",
-      password: "123456",
-      regiones: "Chile",
-      fechaNacimiento: "2000-01-01",
-      telefono: "987654321"
-    };
+  run: "12345678-9",
+  nombre: "Juan",
+  apellidos: "Pérez",
+  correo: "juan@test.com",
+  password: "123456",
+  regiones: "Chile",
+  fechaNacimiento: "2000-01-01",
+  telefono: "987654321",
+  tipoUsuario: {
+    id: 2, // VENDEDOR
+  },
+};
+
 
     crearUsuario(nuevo)
       .then(() => {

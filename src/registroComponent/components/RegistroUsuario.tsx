@@ -1,203 +1,312 @@
 import { useForm } from "react-hook-form";
-import { RegistroInput } from './RegistroInput'
-import { RegistroSelect } from './RegistroSelect'
-import { validarRUT, validarCorreo } from '../../validaciones/validacionesRegistroUsuario'
-import '../RegistroUsuario.css'
+import { RegistroInput } from "./RegistroInput";
+import { RegistroSelect } from "./RegistroSelect";
+import {
+  validarRUT,
+  validarCorreo,
+} from "../../validaciones/validacionesRegistroUsuario";
+import "../RegistroUsuario.css";
 import { useState } from "react";
 import { crearUsuario } from "../../usuariosComponents/usuarioService";
+import axios from "axios";
 
+/* =========================
+   PROPS
+========================= */
 interface RegistroUsuarioProp {
-    tituloPagina: string;
+  tituloPagina: string;
 }
 
+/* =========================
+   FORM DATA
+========================= */
+interface FormRegistroUsuario {
+  run: string;
+  nombre: string;
+  apellidos: string;
+  correo: string;
+  password: string;
+  "confirm-pass": string;
+  regiones: string;
+  fechaNacimiento: string;
+  telefono: string;
+  tipoUsuario: string;
+}
+
+/* =========================
+   TOAST
+========================= */
 interface MsgToastProp {
-    nombreUsuario: string;
-    apellidosUsuario: string;
-    registroExitoso: boolean;
+  nombreUsuario: string;
+  apellidosUsuario: string;
+  registroExitoso: boolean;
 }
 
-const MsgRegistroExitosoToast = ({nombreUsuario, apellidosUsuario, registroExitoso}:MsgToastProp) => {
-    return(
-        <div className={`toast position-fixed top-50 start-50 p-4 bg-primary align-items-center ${registroExitoso ? 'show' : ''}`} role="alert" aria-live="assertive" aria-atomic="true">
-          <div className="d-flex">
-            <div className="toast-body">
-              {` ${nombreUsuario} ${apellidosUsuario} se ha registrado con éxito`}
-            </div>
-          </div>
-        </div>
-    );
-}
+const MsgRegistroExitosoToast = ({
+  nombreUsuario,
+  apellidosUsuario,
+  registroExitoso,
+}: MsgToastProp) => {
+  if (!registroExitoso) return null;
 
+  return (
+    <div
+      className="toast position-fixed top-50 start-50 translate-middle show p-4 bg-success text-white"
+      role="alert"
+      style={{ zIndex: 9999 }}
+    >
+      {nombreUsuario} {apellidosUsuario} se ha registrado con éxito
+    </div>
+  );
+};
 
-export const RegistroUsuario = ({tituloPagina}:RegistroUsuarioProp) => {
+/* =========================
+   COMPONENT
+========================= */
+export const RegistroUsuario = ({ tituloPagina }: RegistroUsuarioProp) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    setError,
+  } = useForm<FormRegistroUsuario>();
 
-    const {register, handleSubmit, formState: {errors}, watch, reset} = useForm()
+  const [registroExitoso, setRegistroExitoso] = useState(false);
 
-    const [registroExitoso, setRegistroExitoso] = useState(false);
+  // 🔥 ESTADO PARA EL TOAST (CLAVE)
+  const [usuarioRegistrado, setUsuarioRegistrado] = useState({
+    nombre: "",
+    apellidos: "",
+  });
 
-    // Se obtiene el valor del input de nombre (name) 'password'. Sera usado para validar confirmacion de password
-    const valorPassword = watch("password")
+  const opcionesRegion = [
+    { valor: "arica", valorTexto: "Arica y Parinacota" },
+    { valor: "coquimbo", valorTexto: "Coquimbo" },
+    { valor: "metropolitana", valorTexto: "Metropolitana de Santiago" },
+    { valor: "losRios", valorTexto: "Los Ríos" },
+    { valor: "magallanes", valorTexto: "Magallanes y Antártica Chilena" },
+  ];
 
-    const nombreUsuario = watch("nombre")
-    const apellidoUsuario = watch("apellidos")
+  /* =========================
+     SUBMIT
+  ========================= */
+  const onSubmit = async (data: FormRegistroUsuario) => {
+    try {
+      const usuario = {
+        run: data.run,
+        nombre: data.nombre,
+        apellidos: data.apellidos,
+        correo: data.correo,
+        password: data.password,
+        regiones: data.regiones,
+        fechaNacimiento: data.fechaNacimiento,
+        telefono: data.telefono,
+        tipoUsuario: {
+          id: Number(data.tipoUsuario),
+        },
+      };
 
-    const opcionesRegion = [
-        {valor: "arica", valorTexto: "Arica y Parinacota"},
-        {valor: "coquimbo", valorTexto: "Coquimbo"},
-        {valor: "metropolitana", valorTexto: "Metropolitana de Santiago"},
-        {valor: "losRios", valorTexto: "Los Ríos"},
-        {valor: "magallanes", valorTexto: "Magallanes y de la Antártica Chilena"}
-    ]
+      await crearUsuario(usuario);
 
-    const onSubmit = async (data: any) => {
-         try {console.log("Enviando",data);
+      // 🔥 Guardar datos ANTES de reset
+      setUsuarioRegistrado({
+        nombre: data.nombre,
+        apellidos: data.apellidos,
+      });
 
-            const usuario = {
-            run: data.run,
-            nombre: data.nombre,
-            apellidos: data.apellidos,
-            correo: data.correo,
-            password: data.password,
-            regiones: data.regiones,
-            fechaNacimiento: data.fechaNacimiento, 
-            telefono: data.telefono,
-            tipoUsuario: data.tipoUsuario
-        };
+      setRegistroExitoso(true);
 
-        console.log(" Enviando al backend:", usuario);
+      setTimeout(() => {
+        reset();
+        setRegistroExitoso(false);
+      }, 2000);
 
-            await crearUsuario(usuario);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const status = error.response?.status;
 
-        setRegistroExitoso(true)
-
-        setTimeout(() => {
-            reset()
-            setRegistroExitoso(false);
-        }, 2000);
-    } catch(error){
-        console.error("error al registrar usuario", error)
-        alert("hubo un error al registrar al usuario");
-        
+        if (status === 409) {
+          setError("run", {
+            type: "manual",
+            message: "Este RUN ya está en uso",
+          });
+          return;
         }
-    };
+      }
 
-    return(
-        <>
-        <main className="main-container-form">
-            <h1 className="text-center my-2 my-md-5">{tituloPagina}</h1>
-        
-            <form className="formulario-registro bg-secondary-subtle p-5 mb-5" onSubmit={handleSubmit(onSubmit)}>
-                <div className="p-3">
-                <RegistroInput
-                    etiqueta="run"
-                    etiquetaTexto = "run"
-                    type="text"
-                    msgError = {errors.run ? "RUN inválido: No debe contener puntos ni guión. Si no es el caso, revise si lo escribió correctamente." : ""}
-                    placeholder = "Ej: Si 12.345.678-k, entonces 12345678k"
-                    registro = {register("run", {required: true, validate: validarRUT})}
-                />
+      setError("run", {
+        type: "manual",
+        message: "Error inesperado al registrar el usuario",
+      });
+    }
+  };
 
-                <fieldset name="nombre-usuario" className="border border-dark p-3 mb-3">
-                    <legend className="text-uppercase fs-6">nombre completo</legend>
-                    <RegistroInput
-                        etiqueta = "nombre"
-                        type = "text"
-                        msgError = {errors.nombre ? "Debe ingresar el nombre" : ""}
-                        placeholder = "Nombre"
-                        registro = {register("nombre", {required: true})}
-                    />
+  /* =========================
+     RENDER
+  ========================= */
+  return (
+    <>
+      <main className="main-container-form">
+        <h1 className="text-center my-5">{tituloPagina}</h1>
 
-                    <RegistroInput
-                        etiqueta = "apellidos"
-                        type = "text"
-                        msgError = {errors.apellidos ? "Debe ingresar los apellidos" : ""}
-                        placeholder = "Apellidos"
-                        registro = {register("apellidos", {required: true})}
-                    />
-                </fieldset>
+        <form
+          className="formulario-registro bg-secondary-subtle p-5 mb-5"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          {/* RUN */}
+          <RegistroInput
+            etiqueta="run"
+            etiquetaTexto="RUN"
+            type="text"
+            placeholder="12345678k"
+            msgError={errors.run?.message}
+            registro={register("run", {
+              required: "El RUN es obligatorio",
+              validate: (value) =>
+                validarRUT(value) || "RUN inválido",
+            })}
+          />
 
-                <RegistroInput
-                    etiqueta = "correo"
-                    etiquetaTexto = "correo"
-                    type = "email"
-                    msgError = {errors.correo ? "Correo inválido: Debe terminar en @duoc.cl, @profesor.duoc.cl o @gmail.com.": ""}
-                    placeholder = "Ej: pia@duoc.cl"
-                    registro = {register("correo", {required: true, validate: validarCorreo})}
-                />
+          {/* NOMBRE */}
+          <RegistroInput
+            etiqueta="nombre"
+            type="text"
+            placeholder="Nombre"
+            msgError={errors.nombre?.message}
+            registro={register("nombre", {
+              required: "Ingrese nombre",
+            })}
+          />
 
-                <RegistroInput
-                    etiqueta = "password"
-                    etiquetaTexto = "contraseña"
-                    type = "password"
-                    msgError = {errors.password ? "Contraseña inválida: Debe contener entre 4 a 10 caracteres." : ""}
-                    registro = {register("password", {required: true, minLength: 4, maxLength: 10})}
-                />
+          {/* APELLIDOS */}
+          <RegistroInput
+            etiqueta="apellidos"
+            type="text"
+            placeholder="Apellidos"
+            msgError={errors.apellidos?.message}
+            registro={register("apellidos", {
+              required: "Ingrese apellidos",
+            })}
+          />
 
-                <RegistroInput
-                    etiqueta = "confirm-pass"
-                    etiquetaTexto = "confirmar contraseña"
-                    type = "password"
-                    msgError = {errors["confirm-pass"] ? "La contraseña no coincide con la ingresada en el campo anterior." : ""}
-                    registro = {register("confirm-pass", {required: true, validate: value => value === valorPassword})}
-                />
+          {/* CORREO */}
+          <RegistroInput
+            etiqueta="correo"
+            type="email"
+            placeholder="correo@duoc.cl"
+            msgError={errors.correo?.message}
+            registro={register("correo", {
+              required: "Correo obligatorio",
+              validate: (value) =>
+                validarCorreo(value) || "Correo inválido",
+            })}
+          />
 
-                <fieldset name = "ubicacion" className="border border-dark p-3 mb-3">
-                    <legend className="text-uppercase fs-6">ubicación</legend>
+          {/* PASSWORD */}
+          <RegistroInput
+            etiqueta="password"
+            etiquetaTexto="Contraseña"
+            type="password"
+            msgError={errors.password?.message}
+            registro={register("password", {
+              required: "Contraseña obligatoria",
+              minLength: {
+                value: 4,
+                message: "Debe tener al menos 4 caracteres",
+              },
+              maxLength: {
+                value: 10,
+                message: "Máximo 10 caracteres",
+              },
+            })}
+          />
 
-                    <RegistroInput
-                        etiqueta = "direccion"
-                        type = "text"
-                        msgError = {errors.direccion ? "Debe ingresar una dirección." : ""}
-                        registro = {register("direccion", {required: true})}
-                        placeholder="Dirección"
-                    />
+          {/* CONFIRM PASSWORD */}
+          <RegistroInput
+            etiqueta="confirm-pass"
+            etiquetaTexto="Confirma contraseña"
+            type="password"
+            msgError={errors["confirm-pass"]?.message}
+            registro={register("confirm-pass", {
+              required: "Confirme la contraseña",
+              validate: (value, formValues) =>
+                value === formValues.password ||
+                "Las contraseñas no coinciden",
+            })}
+          />
 
-                    <RegistroSelect
-                        etiqueta = "regiones"
-                        opcionTextoDefault = "-- Seleccione la región --"
-                        opcionesTexto = {opcionesRegion}
-                        msgError = {errors.regiones ? "Debe elegir una región." : ""}
-                        registro = {register("regiones", {required: true})}
-                    />
-                </fieldset>
+          {/* REGIÓN */}
+          <RegistroSelect
+            etiqueta="regiones"
+            opcionTextoDefault="Seleccione región"
+            opcionesTexto={opcionesRegion}
+            msgError={errors.regiones?.message}
+            registro={register("regiones", {
+              required: "Seleccione región",
+            })}
+          />
 
-                  <div className="mb-4">
-                    <label htmlFor="tipo-usuario" className="form-label">Tipo de usuario</label>
-                    <select className="form-select" id="tipoUsuario" aria-label="Default select example">
-                        <option selected disabled>Seleccione un tipo de usuario</option>
-                        <option value="1">Administrador</option>
-                        <option value="2">Vendedor</option>
-                    </select>
-                </div>
+          {/* TIPO USUARIO */}
+          <div className="mb-3">
+            <label className="form-label">Tipo de usuario</label>
+            <select
+              className={`form-select ${errors.tipoUsuario ? "is-invalid" : ""}`}
+              {...register("tipoUsuario", {
+                required: "Seleccione tipo de usuario",
+              })}
+            >
+              <option value="">Seleccione tipo</option>
+              <option value="1">Administrador</option>
+              <option value="2">Vendedor</option>
+            </select>
 
-                <RegistroInput
-                    etiqueta = "fechaNacimiento"
-                    type = "date"
-                    etiquetaTextoOpcional = "fecha de nacimiento"
-                    registro={register("fechaNacimiento", {required: true})}
-                />
+            {errors.tipoUsuario && (
+              <div className="invalid-feedback d-block">
+                {errors.tipoUsuario.message}
+              </div>
+            )}
+          </div>
 
-                <RegistroInput
-                    etiqueta = "telefono"
-                    type = "tel"
-                    etiquetaTextoOpcional = "teléfono"
-                    msgError = {errors.telefono ? "Teléfono inválido: Son 9 dígitos y no debes incluir '+56'." : ""}
-                    registro = {register("telefono", {required: true, pattern: {value:  /^(|[2-9]\d{8})$/, message: ""}})}
-                />
+          {/* FECHA NACIMIENTO */}
+          <RegistroInput
+            etiqueta="fechaNacimiento"
+            etiquetaTexto="Fecha nacimiento"
+            type="date"
+            msgError={errors.fechaNacimiento?.message}
+            registro={register("fechaNacimiento", {
+              required: "Seleccione fecha de nacimiento",
+            })}
+          />
 
-                <div className="text-center btn-container">
-                    <button className="btn btn-primary btn-lg text-uppercase mt-4" type="submit">registrar</button>
-                </div>
-                </div>
-        
-            </form>
-        </main>
+          {/* TELÉFONO */}
+          <RegistroInput
+            etiqueta="telefono"
+            type="tel"
+            msgError={errors.telefono?.message}
+            registro={register("telefono", {
+              required: "Teléfono obligatorio",
+              pattern: {
+                value: /^[2-9]\d{8}$/,
+                message: "Teléfono inválido",
+              },
+            })}
+          />
 
-        <MsgRegistroExitosoToast
-            nombreUsuario = {nombreUsuario}
-            apellidosUsuario = {apellidoUsuario}
-            registroExitoso = {registroExitoso}
-        />
-        </>
-    );
-}
+          <div className="text-center">
+            <button className="btn btn-primary btn-lg mt-4" type="submit">
+              Registrar
+            </button>
+          </div>
+        </form>
+      </main>
+
+      {/* TOAST */}
+      <MsgRegistroExitosoToast
+        nombreUsuario={usuarioRegistrado.nombre}
+        apellidosUsuario={usuarioRegistrado.apellidos}
+        registroExitoso={registroExitoso}
+      />
+    </>
+  );
+};
