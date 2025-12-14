@@ -3,19 +3,27 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import Navbar from "./Navbar";
 import { MemoryRouter } from "react-router-dom";
 
-// 👉 Mock global para navegación
+// 👉 Mock navegación
 const navigateMock = vi.fn();
 
-// 👉 Mock parcial de react-router-dom (mantiene MemoryRouter)
 vi.mock("react-router-dom", async () => {
-  const actual = await vi.importActual<typeof import("react-router-dom")>("react-router-dom");
+  const actual = await vi.importActual<typeof import("react-router-dom")>(
+    "react-router-dom"
+  );
   return {
     ...actual,
     useNavigate: () => navigateMock,
   };
 });
 
-// Limpiar mocks antes de cada test
+// 👉 Mock AuthContext
+vi.mock("../context/AuthContext", () => ({
+  useAuth: () => ({
+    role: "ROLE_USER",
+    isAuthenticated: false,
+  }),
+}));
+
 beforeEach(() => {
   navigateMock.mockClear();
 });
@@ -77,5 +85,4 @@ describe("Navbar Component Tests", () => {
     fireEvent.click(screen.getByText(/cart \(2\)/i));
     expect(navigateMock).toHaveBeenCalledWith("/carrito");
   });
-
 });

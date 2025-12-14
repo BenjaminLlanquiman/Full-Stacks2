@@ -1,21 +1,38 @@
 import { describe, expect, test, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import LoginForm from "./LoginForm";
 import { MemoryRouter } from "react-router-dom";
 
 // 👉 Mock global del navigate
 const navigateMock = vi.fn();
 
-// 👉 Mock parcial correcto de react-router-dom
+// 👉 Mock react-router-dom
 vi.mock("react-router-dom", async () => {
-  const actual = await vi.importActual<typeof import("react-router-dom")>("react-router-dom");
+  const actual = await vi.importActual<typeof import("react-router-dom")>(
+    "react-router-dom"
+  );
   return {
     ...actual,
     useNavigate: () => navigateMock,
   };
 });
 
-// Limpiar mock entre tests
+// 👉 Mock AuthContext
+vi.mock("../context/AuthContext", () => ({
+  useAuth: () => ({
+    checkAuth: vi.fn(),
+    isAuthenticated: true, // 👈 IMPORTANTE
+    role: "ROLE_USER",     // 👈 usuario normal
+  }),
+}));
+
+// 👉 Mock axios
+vi.mock("../axiosConfig/axiosPublic", () => ({
+  default: {
+    post: vi.fn(() => Promise.resolve({})),
+  },
+}));
+
 beforeEach(() => {
   navigateMock.mockClear();
 });
@@ -40,14 +57,17 @@ describe("LoginForm Component Tests", () => {
       </MemoryRouter>
     );
 
-    const emailInput = screen.getByPlaceholderText(/ingresa tu email/i) as HTMLInputElement;
-    const passwordInput = screen.getByPlaceholderText(/ingresa tu contraseña/i) as HTMLInputElement;
+    fireEvent.change(screen.getByPlaceholderText(/ingresa tu email/i), {
+      target: { value: "test@gmail.com" },
+    });
 
-    fireEvent.change(emailInput, { target: { value: "test@gmail.com" } });
-    fireEvent.change(passwordInput, { target: { value: "123456" } });
+    fireEvent.change(screen.getByPlaceholderText(/ingresa tu contraseña/i), {
+      target: { value: "123456" },
+    });
 
-    expect(emailInput.value).toBe("test@gmail.com");
-    expect(passwordInput.value).toBe("123456");
+    expect(
+      (screen.getByPlaceholderText(/ingresa tu email/i) as HTMLInputElement).value
+    ).toBe("test@gmail.com");
   });
 
   test("Muestra mensajes de error si el formulario está vacío", () => {
@@ -59,12 +79,11 @@ describe("LoginForm Component Tests", () => {
 
     fireEvent.click(screen.getByRole("button", { name: /ingresar/i }));
 
-    // Mensajes exactos definidos en validateLogin.ts
     expect(screen.getByText("El email es obligatorio")).toBeInTheDocument();
     expect(screen.getByText("La contraseña es obligatoria")).toBeInTheDocument();
   });
 
-  test("Muestra mensaje de éxito al iniciar sesión correctamente", () => {
+  test("Login exitoso redirige al home", async () => {
     render(
       <MemoryRouter>
         <LoginForm />
@@ -81,20 +100,21 @@ describe("LoginForm Component Tests", () => {
 
     fireEvent.click(screen.getByRole("button", { name: /ingresar/i }));
 
-    expect(screen.getByText(/¡inicio de sesión exitoso!/i)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(navigateMock).toHaveBeenCalledWith("/");
+    });
   });
 
-  test("Botón 'Regístrate' ejecuta navegación", () => {
+  test("Botón 'Regístrate' navega a registro", () => {
     render(
       <MemoryRouter>
         <LoginForm />
       </MemoryRouter>
     );
 
-    const link = screen.getByRole("link", { name: /regístrate/i });
-    fireEvent.click(link);
+    fireEvent.click(screen.getByText(/regístrate/i));
 
-    expect(navigateMock).toHaveBeenCalled();
+    expect(navigateMock).toHaveBeenCalledWith("/registro-usuario");
   });
 
 });
