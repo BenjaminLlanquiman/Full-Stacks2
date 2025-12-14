@@ -1,10 +1,10 @@
-import { useForm } from "react-hook-form";
-import { RegistroInput } from '../registroComponent/components/RegistroInput'
-import { RegistroSelect } from '../registroComponent/components/RegistroSelect'
-//import { validarRUT, validarCorreo } from '../../validaciones/validacionesRegistroUsuario'
+import { useForm, type SubmitHandler } from "react-hook-form";
 import '../registroComponent/RegistroUsuario.css'
-import { useState } from "react";
-import { crearProducto } from "./ProductoService";
+import { useState, type ChangeEvent} from "react";
+import { crearImagen, crearProducto } from "./ProductoService";
+import { ProductoInput } from "./ProductoInput";
+import { ProductoSelect } from "./ProductoSelect";
+import type { Producto } from "./Producto";
 
 interface RegistroUsuarioProp {
     tituloPagina: string;
@@ -28,26 +28,19 @@ interface RegistroUsuarioProp {
     );
 }*/
 
+type ProductoFormType = Producto;
+
 
 export const RegistroProducto = ({tituloPagina}:RegistroUsuarioProp) => {
 
-    const {register, handleSubmit, formState: {errors}, watch, reset} = useForm()
+    const {register, handleSubmit, formState: {errors}, reset} = useForm<ProductoFormType>()
+    const [file, setFile] = useState<File | null>(null);
 
-    const [registroExitoso, setRegistroExitoso] = useState(false);
-
-    // Se obtiene el valor del input de nombre (name) 'password'. Sera usado para validar confirmacion de password
-    /*const valorPassword = watch("password")
-
-    const nombreUsuario = watch("nombre")
-    const apellidoUsuario = watch("apellidos")*/
-
-    /*const opcionesRegion = [
-        {valor: "arica", valorTexto: "Arica y Parinacota"},
-        {valor: "coquimbo", valorTexto: "Coquimbo"},
-        {valor: "metropolitana", valorTexto: "Metropolitana de Santiago"},
-        {valor: "losRios", valorTexto: "Los Ríos"},
-        {valor: "magallanes", valorTexto: "Magallanes y de la Antártica Chilena"}
-    ]*/
+    const onChangeInputFile = (e: ChangeEvent<HTMLInputElement>) => {
+        if(e.target.files && e.target.files.length > 0) {
+            setFile(e.target.files[0]);
+        }
+    }
 
     const opcionesCategorías = [
         {valor: "accion", valorTexto: "Acción"},
@@ -55,33 +48,27 @@ export const RegistroProducto = ({tituloPagina}:RegistroUsuarioProp) => {
         {valor: "thriller", valorTexto: "Thriller"}
     ]
 
-    const onSubmit = async (data: any) => {
-         try {console.log("Enviando",data);
+    const onSubmit: SubmitHandler<ProductoFormType> = async (data) => {
+        try {
+            // Se crea JSON para enviar producto a backend mediante metodo POST
+            const response = await crearProducto(data);
+            const productoCreado = response.data;
 
-            const producto = {
-            codigo: data.codigo,
-            nombreProducto: data.nombreProducto,
-            descripcion: data.descripcion,
-            precio: data.precio,
-            stockCritico: data.stockCritico,
-            stock: data.stock,
-            categoria: data.categoria
-        };
+            // Se envia al backend la imagen si es que se subio una.
+            if(file) {
+                const formData = new FormData();
+                formData.append("file", file);
 
-        console.log("📤 Enviando al backend:", producto);
+                await crearImagen(productoCreado.id!, formData);
 
-        await crearProducto(producto);
+                alert("Producto registrado correctamente");
+                reset();
+                setFile(null);
+            }
 
-        setRegistroExitoso(true)
-
-        setTimeout(() => {
-            reset()
-            setRegistroExitoso(false);
-        }, 2000);
-    } catch(error){
-        console.error("error al registrar producto", error)
-        alert("hubo un error al registrar al producto");
-        
+        } catch(error) {
+            console.error(error);
+            alert("Error al registrar el producto");
         }
     };
 
@@ -92,7 +79,7 @@ export const RegistroProducto = ({tituloPagina}:RegistroUsuarioProp) => {
         
             <form className="formulario-registro bg-secondary-subtle p-5 mb-5" onSubmit={handleSubmit(onSubmit)}>
                 <div className="p-3">
-                <RegistroInput
+                <ProductoInput
                     etiqueta="codigo"
                     etiquetaTexto = "codigo"
                     type="text"
@@ -103,7 +90,7 @@ export const RegistroProducto = ({tituloPagina}:RegistroUsuarioProp) => {
 
                 <fieldset name="nombre-usuario" className="border border-dark p-3 mb-3">
                     <legend className="text-uppercase fs-6">Producto</legend>
-                    <RegistroInput
+                    <ProductoInput
                         etiqueta = "nombreProducto"
                         type = "text"
                         msgError = {errors.nombreProducto ? "Debe ingresar el nombre del producto" : ""}
@@ -111,7 +98,7 @@ export const RegistroProducto = ({tituloPagina}:RegistroUsuarioProp) => {
                         registro = {register("nombreProducto", {required: true})}
                     />
 
-                    <RegistroInput
+                    <ProductoInput
                         etiqueta = "descripcion"
                         type = "text"
                         etiquetaTextoOpcional = "descripción"
@@ -119,7 +106,7 @@ export const RegistroProducto = ({tituloPagina}:RegistroUsuarioProp) => {
                     />
                 </fieldset>
 
-                <RegistroInput
+                <ProductoInput
                     etiqueta = "precio"
                     etiquetaTexto = "precio"
                     type = "number"
@@ -127,7 +114,7 @@ export const RegistroProducto = ({tituloPagina}:RegistroUsuarioProp) => {
                     registro = {register("precio", {required: true, min: 0})}
                 />
 
-                <RegistroInput
+                <ProductoInput
                     etiqueta = "stockCritico"
                     etiquetaTexto = "stock crítico"
                     type = "number"
@@ -135,7 +122,7 @@ export const RegistroProducto = ({tituloPagina}:RegistroUsuarioProp) => {
                     registro = {register("stockCritico", {required: true, min: 0})}
                 />
 
-                <RegistroInput
+                <ProductoInput
                     etiqueta = "stock"
                     etiquetaTexto = "stock"
                     type = "number"
@@ -146,7 +133,7 @@ export const RegistroProducto = ({tituloPagina}:RegistroUsuarioProp) => {
                 <fieldset name = "ubicacion" className="border border-dark p-3 mb-3">
                     <legend className="text-uppercase fs-6">Categorías</legend>
 
-                    <RegistroSelect
+                    <ProductoSelect
                         etiqueta = "categoria"
                         opcionTextoDefault = "-- Seleccione una categoría --"
                         opcionesTexto = {opcionesCategorías}
@@ -154,6 +141,15 @@ export const RegistroProducto = ({tituloPagina}:RegistroUsuarioProp) => {
                         registro = {register("categoria", {required: true})}
                     />
                 </fieldset>
+
+                <label htmlFor="img-prod">IMAGEN (<span>OPCIONAL</span>)</label>
+                <input
+                    id="img-prod"
+                    type="file"
+                    name="img-prod"
+                    accept="image/jpeg, image/png"
+                    onChange={onChangeInputFile}
+                />
 
                 <div className="text-center btn-container">
                     <button className="btn btn-primary btn-lg text-uppercase mt-4" type="submit">registrar</button>

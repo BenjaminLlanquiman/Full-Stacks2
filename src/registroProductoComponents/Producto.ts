@@ -7,4 +7,5 @@ export interface Producto {
     stockCritico: number;
     stock: number;
     categoria: string;
+    imgUrl?: string;
 }

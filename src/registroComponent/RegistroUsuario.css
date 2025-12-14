@@ -10,6 +10,29 @@
     margin: 0 1em;
 }
 
+.formulario-registro input:not(input[type="file"]) {
+    padding: 10px 30px;
+    border-radius: 30px;
+    border: 0;
+    outline: none;
+}
+
+.formulario-registro input[type="file"] {
+    border:  1px solid #999999;
+    padding: 20px 10px;
+}
+
+.formulario-registro input[type="file"]::file-selector-button {
+    font-weight: bold;
+    margin-right: 20px;
+    padding: 10px 30px;
+    border-radius: 20px;
+    border: 0;
+    background-color: #042dd1;
+    color: white;
+    cursor: pointer;
+}
+
 @media (min-width: 768px) {
     .main-container-form {
         margin: 0 15em;
