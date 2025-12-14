@@ -1,37 +1,33 @@
-import { useRoutes } from "react-router-dom";
-import { Productos } from "../productosComponent/components/Productos";
-import { DetalleProducto } from "../productosComponent/components/DetalleProducto";
-import { CarritoCompras } from "../carritoCompraComponent/CarritoCompras";
-import type { PeliculaType } from "../productosComponent/datosProductos";
-import HomeTienda from "../homeComponents/home_tienda";
-import LoginForm from "../loginComponents/LoginForm";
-import Nosotros from "../nosotrosComponents/nosotros";
-import Blogs from "../blogsComponents/blogs";
-import Contacto from "../contactoComponents/contacto";
-import HomeAdmin from "../homeComponents/home_admin";
-import { RegistroUsuario } from "../registroComponent/components/RegistroUsuario";
-import { RegistroProducto } from "../registroProductoComponents/RegistroProducto";
-import ProductoEditar from "../registroProductoComponents/ProductoEditar";
-import ProductoAdmin from "../registroProductoComponents/ProductoAdmin";
-import AdminEditar from "../homeComponents/AdminEditar";
-import PrivateRoute from "../context/PrivateRoute";
+import { useRoutes } from "react-router-dom"
+import { Productos } from "../productosComponent/components/Productos"
+import { DetalleProducto } from "../productosComponent/components/DetalleProducto"
+import { CarritoCompras } from "../carritoCompraComponent/CarritoCompras"
+import HomeTienda from "../homeComponents/home_tienda"
+import LoginForm from "../loginComponents/LoginForm"
+import Nosotros from "../nosotrosComponents/nosotros"
+import Blogs from "../blogsComponents/blogs"
+import Contacto from "../contactoComponents/contacto"
+import HomeAdmin from "../homeComponents/home_admin"
+import { RegistroUsuario } from "../registroComponent/components/RegistroUsuario"
+import {RegistroProducto} from "../registroProductoComponents/RegistroProducto"
+import ProductoEditar from "../registroProductoComponents/ProductoEditar"
+import ProductoAdmin from "../registroProductoComponents/ProductoAdmin"
+import AdminEditar from "../homeComponents/AdminEditar"
+import type { Producto } from "../registroProductoComponents/Producto"
+import PrivateRoute from "context/PrivateRoute"
+
 
 interface RoutesProps {
-  carrito: PeliculaType[];
-  agregarProd: (idProd: number) => void;
-  eliminarProd: (idProd: number) => void;
-  limpiarCarrito: () => void;
+    carrito: Producto[];
+    agregarProd: (idProd: number) => void;
+    eliminarProd: (idProd: number) => void;
+    limpiarCarrito: () => void;
 }
 
-export const Routes = ({
-  carrito,
-  agregarProd,
-  eliminarProd,
-  limpiarCarrito,
-}: RoutesProps) => {
+export const Routes = ({carrito, agregarProd, eliminarProd, limpiarCarrito}: RoutesProps) => {
 
   const routes = useRoutes([
-    // 🌍 PÚBLICAS
+    // PÚBLICAS
     { path: "/", element: <HomeTienda /> },
     { path: "/productos", element: <Productos agregarProd={agregarProd} /> },
     {
@@ -43,7 +39,7 @@ export const Routes = ({
     { path: "/contacto", element: <Contacto /> },
     { path: "/login", element: <LoginForm /> },
 
-    // 🔒 USUARIO AUTENTICADO
+    // USUARIO AUTENTICADO
     {
       path: "/carrito",
       element: (
@@ -57,7 +53,7 @@ export const Routes = ({
       ),
     },
 
-    // 👑 SOLO ADMIN (ROL REAL)
+    // SOLO ADMIN (ROL REAL)
     {
       path: "/admin",
       element: (
@@ -107,7 +103,7 @@ export const Routes = ({
       ),
     },
 
-    // ❌ 404
+    // Status 404: Pagina no encontrada
     {
       path: "*",
       element: (

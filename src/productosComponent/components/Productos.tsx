@@ -1,13 +1,29 @@
-import { getProductos } from "../accionesProductos";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { TarjetaProducto } from "./TarjetaProducto";
+import { useEffect, useState } from 'react';
+import type { Producto } from "../../registroProductoComponents/Producto";
+import { obtenerProductos } from '../../registroProductoComponents/ProductoService';
 
 interface ProductosProps {
     agregarProd: (idProd: number) => void;
 }
 
 export const Productos = ({agregarProd}:ProductosProps) => {
-    const peliculas = getProductos()
+    const [peliculas, setPeliculas] = useState<Producto[]>([]);
+
+    useEffect(() => {
+        const cargarProductos = async () => {
+            try {
+                const data = await obtenerProductos();
+                setPeliculas(data);
+            } catch(error) {
+                alert("Error al obtener las películas. Revisa las consolas");
+                console.error("Error al obtener las peliculas", error);
+            }
+        }
+
+        cargarProductos();
+    }, []);
 
     return(
         <>

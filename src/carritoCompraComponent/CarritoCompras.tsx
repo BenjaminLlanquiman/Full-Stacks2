@@ -3,11 +3,11 @@ import { TotalPago } from "./TotalPago"
 import { useState } from "react";
 import { ListaProductos } from "./ListaProductos";
 import { VistaCarritoVacio } from "./VistaCarritoVacio";
-import type { PeliculaType } from "../productosComponent/datosProductos";
 import { ModalPagoExitoso } from "./ModalPagoExitoso";
+import type { Producto } from "../registroProductoComponents/Producto";
 
 interface CarritoComprasProp {
-    carrito: PeliculaType[];
+    carrito: Producto[];
     eliminarProd: (idProd: number) => void;
     limpiarCarrito: () => void;
 }

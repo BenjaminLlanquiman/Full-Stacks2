@@ -1,5 +1,4 @@
-// @ts-ignore
-import apiProducto from "../axiosConfig/axiosConfigProd";
+import { apiProducto, apiProductoImagen } from "../axiosConfig/axiosConfigProd";
 import type { Producto } from "./Producto";
 
 export const obtenerProductoPorId = (id: number) => apiProducto.get(`/${id}`);
@@ -10,7 +9,7 @@ export const obtenerProductos = async () => {
 };
 
 export const crearProducto = async (producto: Producto) => {
-    return apiProducto.post("", producto); 
+    return await apiProducto.post("", producto); 
 };
 
 export const eliminarProducto = async (id: number) => {
@@ -19,4 +18,8 @@ export const eliminarProducto = async (id: number) => {
 
 export const actualizarProducto = async (id: number, producto: Producto) => {
     return apiProducto.put(`/${id}`, producto);
+};
+
+export const crearImagen = async(id: number, formData: FormData) => {
+    return apiProductoImagen.post(`/${id}/image`, formData)
 };
