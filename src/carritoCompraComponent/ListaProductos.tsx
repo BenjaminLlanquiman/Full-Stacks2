@@ -1,8 +1,8 @@
 import { ProductosAgregados } from "./ProductosAgregados";
-import type { PeliculaType } from "../productosComponent/datosProductos";
+import type { Producto } from "../registroProductoComponents/Producto";
 
 interface ListaProductosProp {
-    productos: PeliculaType[];
+    productos: Producto[];
     cantidades: number[];
     updateCantidades: (index:number, nuevaCantidad: number) => void;
     eliminarProd: (idProducto: number) => void;
@@ -17,10 +17,9 @@ export const ListaProductos = ({productos, cantidades, updateCantidades, elimina
                     pelicula = {producto}
                     cantidad = {cantidades[index]}
                     updateCantidad = {(nuevaCantidad) => updateCantidades(index, nuevaCantidad)}
-                    eliminarProd = {() => eliminarProd(producto.id)}
+                    eliminarProd = {() => eliminarProd(producto.id!)}
                 />
             ))}
         </section>
-
     );
 }

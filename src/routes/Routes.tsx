@@ -2,7 +2,6 @@ import { useRoutes } from "react-router-dom"
 import { Productos } from "../productosComponent/components/Productos"
 import { DetalleProducto } from "../productosComponent/components/DetalleProducto"
 import { CarritoCompras } from "../carritoCompraComponent/CarritoCompras"
-import type { PeliculaType } from "../productosComponent/datosProductos"
 import HomeTienda from "../homeComponents/home_tienda"
 import LoginForm from "../loginComponents/LoginForm"
 import Nosotros from "../nosotrosComponents/nosotros"
@@ -14,10 +13,11 @@ import {RegistroProducto} from "../registroProductoComponents/RegistroProducto"
 import ProductoEditar from "../registroProductoComponents/ProductoEditar"
 import ProductoAdmin from "../registroProductoComponents/ProductoAdmin"
 import AdminEditar from "../homeComponents/AdminEditar"
+import type { Producto } from "../registroProductoComponents/Producto"
 
 
 interface RoutesProps {
-    carrito: PeliculaType[];
+    carrito: Producto[];
     agregarProd: (idProd: number) => void;
     eliminarProd: (idProd: number) => void;
     limpiarCarrito: () => void;

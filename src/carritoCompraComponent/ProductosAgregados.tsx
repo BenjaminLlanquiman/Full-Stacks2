@@ -1,8 +1,9 @@
 import "./ProductosAgregados.css"
 import type { PeliculaType } from "../productosComponent/datosProductos";
+import type { Producto } from "../registroProductoComponents/Producto";
 
 export interface ProductoAgregadoProp {
-    pelicula: PeliculaType;
+    pelicula: Producto;
     cantidad: number;
     updateCantidad: (nuevaCantidad: number) => void;
     eliminarProd: (idProducto: number) => void;
@@ -20,16 +21,20 @@ export const ProductosAgregados = ({pelicula, cantidad, updateCantidad, eliminar
 
     return(
         <div className="row py-2 bg-secondary-subtle producto-container producto-01" data-id="1">
-            <img className="col-md-3 d-inline-block mb-3 m-md-0 img-pelicula" src={pelicula.imagenSrc} alt={pelicula.imagenAlt}/>
+            <img
+                className="col-md-3 d-inline-block mb-3 m-md-0 img-pelicula"
+                src={`http://localhost:8081${pelicula.imgUrl}`}
+                alt={`Poster de ${pelicula.nombreProducto}`}
+            />
             
             <div className="col-md-5 d-flex align-items-center descr-producto">
                 <div className="descr-prod-content">
-                    <h2>{pelicula.titulo}</h2>
+                    <h2>{pelicula.nombreProducto}</h2>
             
                     <p className="descripcion">{pelicula.descripcion}</p>
             
                     <div className="btn-eliminar-container">
-                        <button className="btn btn-danger" onClick={() => eliminarProd(pelicula.id)}>Eliminar</button>
+                        <button className="btn btn-danger" onClick={() => eliminarProd(pelicula.id!)}>Eliminar</button>
                     </div>
                 </div>
             </div>
