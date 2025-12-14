@@ -20,15 +20,36 @@ export default function Home_tienda() {
         {/* Opciones usuario */}
         <div className="usuario-container">
           <ul>
-            <li onClick={() => navigate("/login")}>Iniciar sesión</li>
+            {/* MOSTRAR SOLO SI NO ESTÁ LOGUEADO */}
+            {!isAuthenticated && (
+              <li onClick={() => navigate("/login")}>
+                Iniciar sesión
+              </li>
+            )}
 
+            {/* MOSTRAR SOLO SI ESTÁ LOGUEADO */}
+            {isAuthenticated && (
+              <li
+                onClick={() => {
+                  logout();
+                  navigate("/");
+                }}
+              >
+                Cerrar sesión
+              </li>
+            )}
+
+            {/* OPCIONES SOLO PARA ADMIN */}
             {isAuthenticated && role === "administrador" && (
-
-                    <>
-                        <li onClick={() => navigate("/registro-usuario")}>Registrar usuario</li>
-            <li onClick={() => navigate("/registro-producto")}>Registrar producto</li>
-                    </>
-                )}
+              <>
+                <li onClick={() => navigate("/registro-usuario")}>
+                  Registrar usuario
+                </li>
+                <li onClick={() => navigate("/registro-producto")}>
+                  Registrar producto
+                </li>
+              </>
+            )}
           </ul>
         </div>
 
@@ -44,7 +65,9 @@ export default function Home_tienda() {
             </p>
 
             <div className="btn-explorar-prod">
-              <p onClick={() => navigate("/productos")}>Explorar catálogo</p>
+              <p onClick={() => navigate("/productos")}>
+                Explorar catálogo
+              </p>
             </div>
           </div>
 
@@ -56,8 +79,10 @@ export default function Home_tienda() {
 
         {/* PRODUCTOS RECOMENDADOS */}
         <section className="productos-recomendados">
-            {peliculas.map((pelicula, index) => (<TarjetaProductoHome key={index} producto={pelicula} />))}
-       </section>
+          {peliculas.map((pelicula, index) => (
+            <TarjetaProductoHome key={index} producto={pelicula} />
+          ))}
+        </section>
       </article>
     </>
   );

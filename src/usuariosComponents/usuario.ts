@@ -1,5 +1,9 @@
+export interface TipoUsuario {
+  id: number;
+}
+
 export interface Usuario {
-  id?: number; 
+  id?: number;
   run: string;
   nombre: string;
   apellidos: string;
@@ -8,5 +12,5 @@ export interface Usuario {
   regiones: string;
   fechaNacimiento: string;
   telefono: string;
-  tipoUsuario: number;
+  tipoUsuario: TipoUsuario; 
 }

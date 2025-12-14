@@ -1,55 +1,63 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
-import { setAuthToken } from "../axiosConfig/axiosPublic";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import apiPublic from "../axiosConfig/axiosPublic";
 
 interface AuthContextType {
-    token: string | null;
-    role: string | null;
-    isAuthenticated: boolean;
-    login: (token: string, role: string) => void;
-    logout: () => void;
+  isAuthenticated: boolean;
+  role: string | null;
+  loading: boolean;                 // 🔥 AGREGADO
+  checkAuth: () => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({
-    token: null,
-    role: null,
-    isAuthenticated: false,
-    login: () => {},
-    logout: () => {},
+  isAuthenticated: false,
+  role: null,
+  loading: true,                    // 🔥 AGREGADO
+  checkAuth: async () => {},
+  logout: async () => {},
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-    const [token, setToken] = useState<string | null>(null);
-    const [role, setRole] = useState<string | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [role, setRole] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true); // 🔥 AGREGADO
 
-    const login = (jwt: string, rol: string) => {
-        setToken(jwt);
-        setRole(rol);
+  const checkAuth = async () => {
+    try {
+      const res = await apiPublic.get("/auth/me");
+      setIsAuthenticated(true);
+      setRole(res.data.roles[0].authority);
+    } catch {
+      setIsAuthenticated(false);
+      setRole(null);
+    } finally {
+      setLoading(false); // 🔥 CLAVE
+    }
+  };
 
-        // 🔥 Pasa el token a Axios (global en memoria)
-        setAuthToken(jwt);
-    };
+  const logout = async () => {
+    await apiPublic.post("/auth/logout");
+    setIsAuthenticated(false);
+    setRole(null);
+  };
 
-    const logout = () => {
-        setToken(null);
-        setRole(null);
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
-        // 🔥 Quita el token de Axios
-        setAuthToken(null);
-    };
-
-    return (
-        <AuthContext.Provider
-            value={{
-                token,
-                role,
-                isAuthenticated: !!token,
-                login,
-                logout,
-            }}
-        >
-            {children}
-        </AuthContext.Provider>
-    );
+  return (
+    <AuthContext.Provider
+      value={{
+        isAuthenticated,
+        role,
+        loading,      // 🔥 EXPUESTO
+        checkAuth,
+        logout,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuth = () => useContext(AuthContext);

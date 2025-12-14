@@ -16,6 +16,9 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
+    /* 🔥 ESTA LÍNEA ES LA CLAVE */
+    "baseUrl": "./src",
+
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
