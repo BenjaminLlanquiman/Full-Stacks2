@@ -82,20 +82,6 @@ export default function LoginForm() {
           )}
 
           <button type="submit">Ingresar</button>
-
-          <p className="change-form">
-            ¿No tienes una cuenta?{" "}
-            <a
-              href="#"
-              className="link-text"
-              onClick={(e) => {
-                e.preventDefault();
-                onSwitchToRegister();
-              }}
-            >
-              Regístrate
-            </a>
-          </p>
         </form>
       </div>
     </article>
