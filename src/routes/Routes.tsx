@@ -1,33 +1,36 @@
-import { useRoutes } from "react-router-dom"
-import { Productos } from "../productosComponent/components/Productos"
-import { DetalleProducto } from "../productosComponent/components/DetalleProducto"
-import { CarritoCompras } from "../carritoCompraComponent/CarritoCompras"
-import HomeTienda from "../homeComponents/home_tienda"
-import LoginForm from "../loginComponents/LoginForm"
-import Nosotros from "../nosotrosComponents/nosotros"
-import Blogs from "../blogsComponents/blogs"
-import Contacto from "../contactoComponents/contacto"
-import HomeAdmin from "../homeComponents/home_admin"
-import { RegistroUsuario } from "../registroComponent/components/RegistroUsuario"
-import {RegistroProducto} from "../registroProductoComponents/RegistroProducto"
-import ProductoEditar from "../registroProductoComponents/ProductoEditar"
-import ProductoAdmin from "../registroProductoComponents/ProductoAdmin"
-import AdminEditar from "../homeComponents/AdminEditar"
-import type { Producto } from "../registroProductoComponents/Producto"
-import PrivateRoute from "context/PrivateRoute"
-
+import { useRoutes } from "react-router-dom";
+import { Productos } from "../productosComponent/components/Productos";
+import { DetalleProducto } from "../productosComponent/components/DetalleProducto";
+import { CarritoCompras } from "../carritoCompraComponent/CarritoCompras";
+import HomeTienda from "../homeComponents/home_tienda";
+import LoginForm from "../loginComponents/LoginForm";
+import Nosotros from "../nosotrosComponents/nosotros";
+import Blogs from "../blogsComponents/blogs";
+import Contacto from "../contactoComponents/contacto";
+import HomeAdmin from "../homeComponents/home_admin";
+import { RegistroUsuario } from "../registroComponent/components/RegistroUsuario";
+import { RegistroProducto } from "../registroProductoComponents/RegistroProducto";
+import ProductoEditar from "../registroProductoComponents/ProductoEditar";
+import ProductoAdmin from "../registroProductoComponents/ProductoAdmin";
+import AdminEditar from "../homeComponents/AdminEditar";
+import type { Producto } from "../registroProductoComponents/Producto";
+import PrivateRoute from "../context/PrivateRoute";
 
 interface RoutesProps {
-    carrito: Producto[];
-    agregarProd: (idProd: number) => void;
-    eliminarProd: (idProd: number) => void;
-    limpiarCarrito: () => void;
+  carrito: Producto[];
+  agregarProd: (idProd: number) => void;
+  eliminarProd: (idProd: number) => void;
+  limpiarCarrito: () => void;
 }
 
-export const Routes = ({carrito, agregarProd, eliminarProd, limpiarCarrito}: RoutesProps) => {
-
+export const Routes = ({
+  carrito,
+  agregarProd,
+  eliminarProd,
+  limpiarCarrito,
+}: RoutesProps) => {
   const routes = useRoutes([
-    // PÚBLICAS
+    // 🌍 PÚBLICAS
     { path: "/", element: <HomeTienda /> },
     { path: "/productos", element: <Productos agregarProd={agregarProd} /> },
     {
@@ -39,25 +42,23 @@ export const Routes = ({carrito, agregarProd, eliminarProd, limpiarCarrito}: Rou
     { path: "/contacto", element: <Contacto /> },
     { path: "/login", element: <LoginForm /> },
 
-    // USUARIO AUTENTICADO
+    // 🛒 CARRITO (PÚBLICO, SIN LOGIN)
     {
       path: "/carrito",
       element: (
-        <PrivateRoute>
-          <CarritoCompras
-            carrito={carrito}
-            eliminarProd={eliminarProd}
-            limpiarCarrito={limpiarCarrito}
-          />
-        </PrivateRoute>
+        <CarritoCompras
+          carrito={carrito}
+          eliminarProd={eliminarProd}
+          limpiarCarrito={limpiarCarrito}
+        />
       ),
     },
 
-    // SOLO ADMIN (ROL REAL)
+    // 🔐 SOLO ADMIN
     {
       path: "/admin",
       element: (
-        <PrivateRoute roleRequired="ROLE_ADMIN">
+        <PrivateRoute roles={["ROLE_ADMIN"]}>
           <HomeAdmin />
         </PrivateRoute>
       ),
@@ -65,7 +66,7 @@ export const Routes = ({carrito, agregarProd, eliminarProd, limpiarCarrito}: Rou
     {
       path: "/registro-usuario",
       element: (
-        <PrivateRoute roleRequired="ROLE_ADMIN">
+        <PrivateRoute roles={["ROLE_ADMIN"]}>
           <RegistroUsuario tituloPagina="Registro de Usuario" />
         </PrivateRoute>
       ),
@@ -73,23 +74,26 @@ export const Routes = ({carrito, agregarProd, eliminarProd, limpiarCarrito}: Rou
     {
       path: "/registro-producto",
       element: (
-        <PrivateRoute roleRequired="ROLE_ADMIN">
+        <PrivateRoute roles={["ROLE_ADMIN"]}>
           <RegistroProducto tituloPagina="Registro Productos" />
         </PrivateRoute>
       ),
     },
+
+    // 🔐 ADMIN + VENDEDOR
     {
       path: "/producto-admin",
       element: (
-        <PrivateRoute roleRequired="ROLE_ADMIN">
+        <PrivateRoute roles={["ROLE_ADMIN", "ROLE_VENDEDOR"]}>
           <ProductoAdmin />
         </PrivateRoute>
       ),
     },
+
     {
       path: "/Editar/:id",
       element: (
-        <PrivateRoute roleRequired="ROLE_ADMIN">
+        <PrivateRoute roles={["ROLE_ADMIN"]}>
           <AdminEditar />
         </PrivateRoute>
       ),
@@ -97,13 +101,13 @@ export const Routes = ({carrito, agregarProd, eliminarProd, limpiarCarrito}: Rou
     {
       path: "/EditarProducto/:id",
       element: (
-        <PrivateRoute roleRequired="ROLE_ADMIN">
+        <PrivateRoute roles={["ROLE_ADMIN", "ROLE_VENDEDOR"]}>
           <ProductoEditar />
         </PrivateRoute>
       ),
     },
 
-    // Status 404: Pagina no encontrada
+    // ❌ 404
     {
       path: "*",
       element: (
