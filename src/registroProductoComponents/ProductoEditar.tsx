@@ -42,9 +42,9 @@ useEffect(() => {
     try {
       await actualizarProducto(Number (id), producto);
       alert("Producto actualizado correctamente 🎉");
-      navigate("/admin");1
+      navigate("/producto-admin");1
     } catch (err) {
-      alert("Error al actualizar usuario");
+      alert("Error al actualizar el producto");
     }
   };
 
