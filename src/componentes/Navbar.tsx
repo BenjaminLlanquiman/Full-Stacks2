@@ -11,6 +11,9 @@ export default function Navbar({ cantProd }: NavbarProps) {
   const navigate = useNavigate();
   const { role, isAuthenticated } = useAuth();
 
+  const esAdmin = role === "ROLE_ADMIN";
+  const esVendedor = role === "ROLE_VENDEDOR";
+
   return (
     <nav className="navbar">
       <p className="nombre-pagina" onClick={() => navigate("/")}>
@@ -24,18 +27,27 @@ export default function Navbar({ cantProd }: NavbarProps) {
         <li onClick={() => navigate("/blogs")}>Blogs</li>
         <li onClick={() => navigate("/contacto")}>Contacto</li>
 
-        {/* 🔐 SOLO ADMIN */}
-        {isAuthenticated && role === "ROLE_ADMIN" && (
+        {/* 🔐 ADMIN */}
+        {isAuthenticated && esAdmin && (
           <>
-            <li onClick={() => navigate("/admin")}>Editar Usuarios</li>
+            <li onClick={() => navigate("/admin")}>
+              Editar Usuarios
+            </li>
             <li onClick={() => navigate("/producto-admin")}>
               Editar Productos
             </li>
           </>
         )}
+
+        {/* 🧑‍💼 VENDEDOR */}
+        {isAuthenticated && esVendedor && (
+          <li onClick={() => navigate("/producto-admin")}>
+            Editar Productos
+          </li>
+        )}
       </ul>
 
-      {/* 🛒 SOLO CARRITO */}
+      {/* 🛒 CARRITO */}
       <p
         className="carrito-compras"
         onClick={() => navigate("/carrito")}

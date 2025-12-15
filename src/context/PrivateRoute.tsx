@@ -4,16 +4,16 @@ import type { ReactNode } from "react";
 
 interface PrivateRouteProps {
   children: ReactNode;
-  roleRequired?: string;
+  roles?: string[];
 }
 
 export default function PrivateRoute({
   children,
-  roleRequired,
+  roles,
 }: PrivateRouteProps) {
   const { isAuthenticated, role, loading } = useAuth();
 
-  // ⏳ Esperar a que el backend responda
+  // ⏳ Esperar a que cargue el auth
   if (loading) {
     return <p style={{ textAlign: "center" }}>Cargando...</p>;
   }
@@ -23,8 +23,8 @@ export default function PrivateRoute({
     return <Navigate to="/login" replace />;
   }
 
-  // 🛑 Rol incorrecto
-  if (roleRequired && role !== roleRequired) {
+  // 🛑 Rol no permitido o nulo
+  if (roles && (!role || !roles.includes(role))) {
     return <Navigate to="/" replace />;
   }
 
